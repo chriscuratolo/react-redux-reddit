@@ -1,0 +1,29 @@
+import * as ActionCreators from '../actions'
+
+export default (state = {
+  isAuthenticated: localStorage.getItem('accessToken') ? true : false,
+  isFetching: false
+}, action) => {
+  switch (action.type) {
+    case ActionCreators.FETCH_TOKEN_REQUEST:
+      return Object.assign({}, state, {
+        ...state,
+        isFetching: true
+      })
+    case ActionCreators.FETCH_TOKEN_SUCCESS:
+      localStorage.setItem('accessToken', action.payload.accessToken)
+      localStorage.setItem('refreshToken', action.payload.refreshToken)
+      return Object.assign({}, state, {
+        ...state,
+        isAuthenticated: true,
+        isFetching: false,
+      })
+    case ActionCreators.FETCH_TOKEN_FAILURE:
+      return Object.assign({}, state, {
+        ...state,
+        isFetching: false
+      })
+    default:
+      return state
+  }
+}
