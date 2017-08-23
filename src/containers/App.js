@@ -10,6 +10,7 @@ injectTapEventPlugin()
 
 const styles = {
   app: {
+    backgroundColor: '#E6ECF0',
     fontFamily: 'Fira Sans, sans-serif',
     height: '100vh',
   }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import AppBar from 'material-ui/AppBar'
-import { CardActions, CardMedia, CardText } from 'material-ui/Card'
+import Card, { CardActions, CardMedia, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { fetchToken } from '../actions'
@@ -36,7 +36,7 @@ const styles = {
     position: 'fixed',
     top: 0,
   },
-  authorize: {
+  card: {
     margin: '23px auto',
     maxWidth: '500px',
   },
@@ -91,7 +91,7 @@ class Authorize extends Component {
         />
         <Page>
           <Container>
-            <div style={styles.authorize}>
+            <Card style={styles.card}>
               <CardMedia>
                 <img src='assets/snoo-narwhal.gif' alt='snoo-narwhal' />
               </CardMedia>
@@ -106,7 +106,7 @@ class Authorize extends Component {
                   <RaisedButton label='Authorize' primary={true} />
                 </a>
               </CardActions>
-            </div>
+            </Card>
           </Container>
         </Page>
       </div>
