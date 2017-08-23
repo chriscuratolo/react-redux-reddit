@@ -38,7 +38,7 @@ const styles = {
   },
   card: {
     margin: '23px auto',
-    maxWidth: '500px',
+    maxWidth: '600px',
   },
   cardActions: {
     textAlign: 'right',
@@ -52,7 +52,9 @@ class Authorize extends Component {
   state = { width: null, height: null }
   updateWindowDimensions = () => this.setState({ width: window.innerWidth, height: window.innerHeight })
   componentWillMount() {
-    if (!localStorage.getItem('authState')) {
+    if (this.props.isAuthenticated) {
+      this.props.router.push('/')
+    } else if (!localStorage.getItem('authState')) {
       localStorage.setItem('authState', randomString(10))
     }
   }
