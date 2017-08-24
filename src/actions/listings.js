@@ -4,14 +4,20 @@ export const LISTINGS_REQUEST = 'LISTINGS_REQUEST'
 export const LISTINGS_SUCCESS = 'LISTINGS_SUCCESS'
 export const LISTINGS_FAILURE = 'LISTINGS_FAILURE'
 
-const fetchListings = () => ({
+const fetchListings = endpoint => ({
   [CALL_API]: {
     types: [ LISTINGS_REQUEST, LISTINGS_SUCCESS, LISTINGS_FAILURE ],
-    endpoint: 'subreddits/mine/subscriber',
     schema: Schemas.LISTINGS,
+    endpoint,
   }
 })
 
-export const loadListings = () => (dispatch, getState) => {
-  return dispatch(fetchListings())
+export const loadListings = (subreddit = '', sorting = 'hot') => (dispatch, getState) => {
+  const endpoint = `${subreddit ? `/r/${subreddit}` : ``}/${sorting}`
+
+  if (getState().pagination.listingsByEndpoint[endpoint]) {
+    return null
+  }
+
+  return dispatch(fetchListings(endpoint))
 }

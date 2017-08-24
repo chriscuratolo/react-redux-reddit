@@ -18,6 +18,8 @@ const paginate = ({ types, mapActionToKey }) => {
   const updatePagination = (state = {
     isFetching: false,
     nextPageUrl: undefined,
+    previousPageUrl: undefined,
+    kind: undefined,
     pageCount: 0,
     ids: []
   }, action) => {
@@ -31,9 +33,11 @@ const paginate = ({ types, mapActionToKey }) => {
         return {
           ...state,
           isFetching: false,
-          ids: union(state.ids, action.response.result),
+          ids: union(state.ids, action.response.result.children),
           nextPageUrl: action.response.nextPageUrl,
-          pageCount: state.pageCount + 1
+          previousPageUrl: action.response.previousPageUrl,
+          kind: action.response.kind,
+          pageCount: state.pageCount + 1,
         }
       case failureType:
         return {

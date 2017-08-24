@@ -1,44 +1,37 @@
+import axios from 'axios'
 import { normalize, schema } from 'normalizr'
 import { camelizeKeys } from 'humps'
 
-// Extracts the next page URL from Github API response.
-const getNextPageUrl = response => {
-  const link = response.headers.get('link')
-  if (!link) {
-    return null
-  }
-
-  const nextLink = link.split(',').find(s => s.indexOf('rel="next"') > -1)
-  if (!nextLink) {
-    return null
-  }
-
-  return nextLink.split(';')[0].slice(1, -1)
-}
-
-const API_ROOT = 'https://api.github.com/'
-
-// Fetches an API response and normalizes the result JSON according to schema.
-// This makes every API response have the same shape, regardless of how nested it was.
 const callApi = (endpoint, schema) => {
-  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
+  const accessToken = localStorage.getItem('accessToken')
 
-  return fetch(fullUrl)
-    .then(response =>
-      response.json().then(json => {
-        if (!response.ok) {
-          return Promise.reject(json)
-        }
+  if (!accessToken) {
+    throw new Error('No access token!')
+  }
 
-        const camelizedJson = camelizeKeys(json)
-        const nextPageUrl = getNextPageUrl(response)
+  const config = {
+    baseURL: 'https://oauth.reddit.com',
+    headers: { 'Authorization': `bearer ${accessToken}` },
+    url: endpoint,
+  }
 
-        return Object.assign({},
-          normalize(camelizedJson, schema),
-          { nextPageUrl }
-        )
-      })
-    )
+  return axios(config)
+    .then(response => {
+      if (response.status < 200 || response.state >= 300) {
+        return Promise.reject(response)
+      }
+
+      const { data } = response.data
+      const camelizedJson = camelizeKeys(data)
+
+      return Object.assign({},
+        normalize(camelizedJson, schema),
+        { nextPageUrl: data.after ? `${endpoint}?count=25&after=${data.after}` : undefined },
+        { previousPageUrl: data.before ? `${endpoint}?count=25&before=${data.before}` : undefined },
+        { kind: response.data.kind },
+      )
+    })
+    .catch(error => { throw error })
 }
 
 // We use this Normalizr schemas to transform API responses from a nested form
@@ -54,6 +47,10 @@ const callApi = (endpoint, schema) => {
 // leading to a frozen UI as it wouldn't find "someuser" in the entities.
 // That's why we're forcing lower cases down there.
 
+const listingSchema = new schema.Entity('listings', {}, {
+  idAttribute: listing => listing.data.id
+})
+
 const userSchema = new schema.Entity('users', {}, {
   idAttribute: user => user.login.toLowerCase()
 })
@@ -64,8 +61,9 @@ const repoSchema = new schema.Entity('repos', {
   idAttribute: repo => repo.fullName.toLowerCase()
 })
 
-// Schemas for Github API responses.
+// Schemas for Reddit API responses.
 export const Schemas = {
+  LISTINGS: { children: [listingSchema] },
   USER: userSchema,
   USER_ARRAY: [userSchema],
   REPO: repoSchema,
@@ -91,6 +89,7 @@ export default store => next => action => {
   }
 
   if (typeof endpoint !== 'string') {
+    console.log(endpoint)
     throw new Error('Specify a string endpoint URL.')
   }
   if (!schema) {
@@ -110,16 +109,17 @@ export default store => next => action => {
   }
 
   const [ requestType, successType, failureType ] = types
-  next(actionWith({ type: requestType }))
+  next(actionWith({ type: requestType, endpoint }))
 
   return callApi(endpoint, schema).then(
     response => next(actionWith({
+      type: successType,
       response,
-      type: successType
+      endpoint,
     })),
     error => next(actionWith({
       type: failureType,
-      error: error.message || 'Something bad happened'
+      error: error.message || 'Something bad happened',
     }))
   )
 }
