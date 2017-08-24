@@ -28,8 +28,14 @@ export const fetchToken = code => dispatch => {
   dispatch(fetchTokenRequest())
 
   return axios(config)
-    .then(response => dispatch(fetchTokenSuccess(camelizeKeys(response.data))))
-    .catch(error => dispatch(fetchTokenFailure(error)))
+    .then(response => {
+      localStorage.setItem('accessToken', response.data.accessToken)
+      localStorage.setItem('refreshToken', response.data.refreshToken)
+      dispatch(fetchTokenSuccess(camelizeKeys(response.data)))
+    })
+    .catch(error => {
+      dispatch(fetchTokenFailure(error))
+    })
 }
 
 export const REVOKE_TOKEN_REQUEST = 'REVOKE_TOKEN_REQUEST'

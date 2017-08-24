@@ -11,8 +11,6 @@ export default (state = {
         isFetching: true
       })
     case ActionCreators.FETCH_TOKEN_SUCCESS:
-      localStorage.setItem('accessToken', action.payload.accessToken)
-      localStorage.setItem('refreshToken', action.payload.refreshToken)
       return Object.assign({}, state, {
         ...state,
         isAuthenticated: true,
