@@ -29,9 +29,10 @@ export const fetchToken = code => dispatch => {
 
   return axios(config)
     .then(response => {
-      localStorage.setItem('accessToken', response.data.accessToken)
-      localStorage.setItem('refreshToken', response.data.refreshToken)
-      dispatch(fetchTokenSuccess(camelizeKeys(response.data)))
+      const camelizedJson = camelizeKeys(response.data)
+      localStorage.setItem('accessToken', camelizedJson.accessToken)
+      localStorage.setItem('refreshToken', camelizedJson.refreshToken)
+      dispatch(fetchTokenSuccess(camelizedJson))
     })
     .catch(error => {
       dispatch(fetchTokenFailure(error))

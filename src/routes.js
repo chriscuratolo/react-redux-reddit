@@ -8,11 +8,11 @@ import ProtectedRoute from './containers/ProtectedRoute'
 
 export default (
   <Route path='/' component={App}>
+    <Route path='authorize' component={Authorize} />
     <Route component={ProtectedRoute}>
       <IndexRoute component={Listings} />
       <Route path=':sorting' component={Listings} />
       <Route path='r/:subreddit(/:sorting)' component={Listings} />
     </Route>
-    <Route path='authorize' component={Authorize} />
   </Route>
 )
