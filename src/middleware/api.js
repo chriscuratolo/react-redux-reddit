@@ -89,7 +89,6 @@ export default store => next => action => {
   }
 
   if (typeof endpoint !== 'string') {
-    console.log(endpoint)
     throw new Error('Specify a string endpoint URL.')
   }
   if (!schema) {
