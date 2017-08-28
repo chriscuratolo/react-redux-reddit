@@ -1,5 +1,5 @@
 {
-  "name": "reddit-client",
+  "name": "react-reddit-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

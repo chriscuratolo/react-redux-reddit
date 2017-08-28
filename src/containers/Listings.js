@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import AppBar from 'material-ui/AppBar'
+import { CardText } from 'material-ui/Card'
 
 import { loadListings } from '../actions'
 import Container from '../components/Container'
@@ -16,13 +17,16 @@ const styles = {
 }
 
 const title = (subreddit, sorting) => {
+  let title = ''
   if (subreddit) {
-    return `r/${subreddit}`
-  } else if (sorting) {
-    return sorting
+    title += `r/${subreddit}`
+    if (sorting && sorting !== 'hot') {
+      title += `/$${sorting}`
+    }
   } else {
-    return 'hot'
+    return `Home`
   }
+  return title
 }
 
 class Listings extends Component {
@@ -31,7 +35,7 @@ class Listings extends Component {
     this.props.loadListings(subreddit, sorting)
   }
   render() {
-    const { subreddit, sorting } = this.props.params
+    const { params: { subreddit, sorting }, pageData } = this.props
     return (
       <div>
         <AppBar
@@ -41,6 +45,15 @@ class Listings extends Component {
         />
         <Page>
           <Container>
+            {
+              pageData
+                ? <CardText>
+                    <pre>
+                      {JSON.stringify(pageData, null, 2)}
+                    </pre>
+                  </CardText>
+                : null
+            }
           </Container>
         </Page>
       </div>
@@ -50,7 +63,19 @@ class Listings extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { pagination:{ listingsByEndpoint }, entities: { listings } } = state
-  const page = listingsByEndpoint[ownProps.location.pathname]
+  const { subreddit, sorting } = ownProps.params
+
+  let endpoint = ``
+  if (subreddit) {
+    endpoint += `/r/${subreddit}`
+  }
+  if (sorting) {
+    endpoint += `/${sorting}`
+  } else {
+    endpoint += `/hot`
+  }
+
+  const page = listingsByEndpoint[endpoint]
   const pageData = page && page.ids.map(id => listings[id])
 
   return { page, pageData }

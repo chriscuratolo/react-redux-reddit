@@ -35,7 +35,7 @@ const pagination = combineReducers({
     types: [
       ActionTypes.LISTINGS_REQUEST,
       ActionTypes.LISTINGS_SUCCESS,
-      ActionTypes.LISTINGS_FAILURE
+      ActionTypes.LISTINGS_FAILURE,
     ]
   }),
 })

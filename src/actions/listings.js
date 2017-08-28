@@ -6,7 +6,11 @@ export const LISTINGS_FAILURE = 'LISTINGS_FAILURE'
 
 const fetchListings = endpoint => ({
   [CALL_API]: {
-    types: [ LISTINGS_REQUEST, LISTINGS_SUCCESS, LISTINGS_FAILURE ],
+    types: [
+      LISTINGS_REQUEST,
+      LISTINGS_SUCCESS,
+      LISTINGS_FAILURE,
+    ],
     schema: Schemas.LISTINGS,
     endpoint,
   }
