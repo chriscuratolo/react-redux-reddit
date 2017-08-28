@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { normalize, schema } from 'normalizr'
 import { camelizeKeys } from 'humps'
+import { normalize, schema } from 'normalizr'
 
 const callApi = (endpoint, schema) => {
   const accessToken = localStorage.getItem('accessToken')
 
   if (!accessToken) {
-    throw new Error('No access token!')
+    throw new Error('Error: No access token.')
   }
 
   const config = {
@@ -21,15 +21,9 @@ const callApi = (endpoint, schema) => {
         return Promise.reject(response)
       }
 
-      const { data } = response.data
-      const camelizedJson = camelizeKeys(data)
+      const camelizedJson = camelizeKeys(response.data)
 
-      return Object.assign({},
-        normalize(camelizedJson, schema),
-        { nextPageUrl: data.after ? `${endpoint}?count=25&after=${data.after}` : undefined },
-        { previousPageUrl: data.before ? `${endpoint}?count=25&before=${data.before}` : undefined },
-        { kind: response.data.kind },
-      )
+      return Object.assign({}, normalize(camelizedJson, schema))
     })
     .catch(error => { throw error })
 }
@@ -63,7 +57,7 @@ const repoSchema = new schema.Entity('repos', {
 
 // Schemas for Reddit API responses.
 export const Schemas = {
-  LISTINGS: { children: [listingSchema] },
+  LISTINGS: { data: { children: [listingSchema] } },
   USER: userSchema,
   USER_ARRAY: [userSchema],
   REPO: repoSchema,
@@ -87,7 +81,6 @@ export default store => next => action => {
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())
   }
-
   if (typeof endpoint !== 'string') {
     throw new Error('Specify a string endpoint URL.')
   }

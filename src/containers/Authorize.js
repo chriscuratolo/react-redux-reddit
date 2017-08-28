@@ -6,7 +6,7 @@ import AppBar from 'material-ui/AppBar'
 import Card, { CardActions, CardMedia, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import { fetchToken } from '../actions'
+import { initializeToken } from '../actions'
 import Container from '../components/Container'
 import Page from '../components/Page'
 
@@ -65,7 +65,7 @@ class Authorize extends Component {
     const { state, code, error } = this.props.location.query
     if (state && code) {
       if (state === localStorage.getItem('authState')) {
-        this.props.fetchToken(code)
+        this.props.initializeToken(code)
       } else {
         console.log('Authorization Error: Invalid state.')
       }
@@ -118,6 +118,6 @@ class Authorize extends Component {
 
 const mapStateToProps = state => ({ isAuthenticated: state.auth.isAuthenticated })
 
-const mapDispatchToProps = dispatch => bindActionCreators({ fetchToken }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ initializeToken }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Authorize)

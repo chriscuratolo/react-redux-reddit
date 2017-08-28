@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
-import configureStore from './store/configureStore'
+import configureStore from './configureStore'
 import registerServiceWorker from './registerServiceWorker'
 import Root from './containers/Root'
 import './index.css'
