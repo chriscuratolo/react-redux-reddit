@@ -25,3 +25,18 @@ export const loadListings = (subreddit = '', sorting = 'hot') => (dispatch, getS
 
   return dispatch(fetchListings(endpoint))
 }
+
+export const paramsToEndpoint = params => {
+  let endpoint = ``
+  if (params.subreddit) {
+    endpoint += `/r/${params.subreddit}`
+  }
+  if (params.sorting) {
+    endpoint += `/${params.sorting}`
+  } else {
+    endpoint += `/hot`
+  }
+  return endpoint
+}
+
+// TODO: create a function that generates an endpoint from url params.

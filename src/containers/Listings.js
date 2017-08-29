@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import AppBar from 'material-ui/AppBar'
 import { CardText } from 'material-ui/Card'
 
-import { loadListings } from '../actions'
+import { loadListings, paramsToEndpoint } from '../actions'
 import Container from '../components/Container'
 import Page from '../components/Page'
 
@@ -21,7 +21,7 @@ const title = (subreddit, sorting) => {
   if (subreddit) {
     title += `r/${subreddit}`
     if (sorting && sorting !== 'hot') {
-      title += `/$${sorting}`
+      title += `/${sorting}`
     }
   } else {
     return `Home`
@@ -47,11 +47,11 @@ class Listings extends Component {
           <Container>
             {
               pageData
-                ? <CardText>
-                    <pre>
-                      {JSON.stringify(pageData, null, 2)}
-                    </pre>
-                  </CardText>
+                ? pageData.map(listing =>
+                    <CardText>
+                      {listing.data.title}
+                    </CardText>
+                  )
                 : null
             }
           </Container>
@@ -62,20 +62,8 @@ class Listings extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { pagination:{ listingsByEndpoint }, entities: { listings } } = state
-  const { subreddit, sorting } = ownProps.params
-
-  let endpoint = ``
-  if (subreddit) {
-    endpoint += `/r/${subreddit}`
-  }
-  if (sorting) {
-    endpoint += `/${sorting}`
-  } else {
-    endpoint += `/hot`
-  }
-
-  const page = listingsByEndpoint[endpoint]
+  const { pagination: { listingsByEndpoint }, entities: { listings } } = state
+  const page = listingsByEndpoint[paramsToEndpoint(ownProps.params)]
   const pageData = page && page.ids.map(id => listings[id])
 
   return { page, pageData }

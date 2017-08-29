@@ -6,7 +6,6 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import configureStore from './configureStore'
 import registerServiceWorker from './registerServiceWorker'
 import Root from './containers/Root'
-import './index.css'
 
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)
