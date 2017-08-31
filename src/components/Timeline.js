@@ -32,12 +32,12 @@ const Timeline = props =>
         <div key={listing.data.id}>
           <CardHeader
             subtitle={subtitle(listing.data.subredditNamePrefixed, moment.unix(listing.data.createdUtc).fromNow(true), listing.data.domain)}
-            style={{padding: '16px 16px 8px'}}
+            style={{padding: '16px 16px 4px'}}
           />
           <CardTitle
             title={listing.data.title}
             titleStyle={{fontSize: '18px', lineHeight: '27px'}}
-            style={{padding: '8px 16px'}}
+            style={{padding: '8px 16px 16px'}}
           />
           <CardActions>
             <div style={{display: 'inline-block', textAlign: 'center', width: '33%'}}>
