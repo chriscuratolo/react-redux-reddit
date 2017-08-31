@@ -1,6 +1,7 @@
 import React from 'react'
+import moment from 'moment'
 
-import Card, { CardActions, CardText, CardTitle } from 'material-ui/Card'
+import Card, { CardActions, CardHeader, CardText, CardTitle } from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
 import FontIcon from 'material-ui/FontIcon'
 import FlatButton from 'material-ui/FlatButton'
@@ -15,16 +16,24 @@ const styles = {
   }
 }
 
+const subtitle = (subreddit, timeAgo, domain) => {
+  let string = `${subreddit} • ${timeAgo}`
+  if (domain) {
+    string += ` • ${domain}`
+  }
+  return string
+}
+
 const Timeline = props =>
   <Card style={styles.timeline}>
     {
       props.pageData.map(listing =>
         <div key={listing.data.id}>
+          <CardHeader subtitle={subtitle(listing.data.subredditNamePrefixed, moment.unix(listing.data.createdUtc).fromNow(true), listing.data.domain)} />
           <CardTitle
             title={listing.data.title}
-            titleStyle={{fontSize: '18px'}}
-            subtitle={(<div>submitted by <strong>{listing.data.author}</strong> to <strong>{listing.data.subredditNamePrefixed}</strong></div>)}
-            subtitleStyle={{paddingTop: '10px'}}
+            titleStyle={{fontSize: '18px', lineHeight: '27px'}}
+            style={{paddingBottom: '24px', paddingTop: '0px'}}
           />
           <CardActions>
             <div style={{display: 'inline-block', textAlign: 'center', width: '33%'}}>
