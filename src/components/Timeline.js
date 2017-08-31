@@ -15,8 +15,8 @@ const styles = {
   cardHeader: {
     padding: '12px 16px 2px',
   },
-  cardHeaderSubtitle: {
-    padding: '0',
+  cardHeaderText: {
+    padding: '0px',
   },
   cardText: {
     lineHeight: '25px',
@@ -26,13 +26,13 @@ const styles = {
     color: 'rgba(0, 0, 0, 0.54)',
   },
   timeline: {
-    margin: '0 auto',
+    margin: '0px auto',
     maxWidth: '588px',
   },
   scoreText: {
     color: 'rgba(0, 0, 0, 0.54)',
     display: 'inline-block',
-    padding: '8px',
+    padding: '0px',
   },
   voteButton: {
     color: 'rgba(0, 0, 0, 0.54)',
@@ -53,7 +53,7 @@ const Timeline = props =>
             moment.unix(listing.data.createdUtc).fromNow(true),
             listing.data.domain
           )}
-          subtitleStyle={styles.cardHeaderSubtitle}
+          textStyle={styles.cardHeaderText}
           style={styles.cardHeader}
         />
         <CardText style={styles.cardText}>{listing.data.title}</CardText>
