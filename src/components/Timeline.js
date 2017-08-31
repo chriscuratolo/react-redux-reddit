@@ -12,6 +12,7 @@ const styles = {
     maxWidth: '588px',
   },
   voteButton: {
+    color: 'rgba(0, 0, 0, 0.54)',
     minWidth: '30px',
   }
 }
@@ -29,11 +30,14 @@ const Timeline = props =>
     {
       props.pageData.map(listing =>
         <div key={listing.data.id}>
-          <CardHeader subtitle={subtitle(listing.data.subredditNamePrefixed, moment.unix(listing.data.createdUtc).fromNow(true), listing.data.domain)} />
+          <CardHeader
+            subtitle={subtitle(listing.data.subredditNamePrefixed, moment.unix(listing.data.createdUtc).fromNow(true), listing.data.domain)}
+            style={{padding: '16px 16px 8px'}}
+          />
           <CardTitle
             title={listing.data.title}
             titleStyle={{fontSize: '18px', lineHeight: '27px'}}
-            style={{paddingBottom: '24px', paddingTop: '0px'}}
+            style={{padding: '8px 16px'}}
           />
           <CardActions>
             <div style={{display: 'inline-block', textAlign: 'center', width: '33%'}}>
@@ -41,7 +45,7 @@ const Timeline = props =>
                 icon={<FontIcon className='material-icons'>arrow_upward</FontIcon>}
                 style={styles.voteButton}
               />
-              <CardText style={{display: 'inline-block', padding: '8px'}}>{listing.data.score}</CardText>
+              <CardText style={{color: 'rgba(0, 0, 0, 0.54)', display: 'inline-block', padding: '8px'}}>{listing.data.score}</CardText>
               <FlatButton
                 icon={<FontIcon className='material-icons'>arrow_downward</FontIcon>}
                 style={styles.voteButton}
@@ -51,6 +55,7 @@ const Timeline = props =>
               <FlatButton
                 label={String(listing.data.numComments)}
                 icon={<FontIcon className='material-icons'>comment</FontIcon>}
+                style={{color: 'rgba(0, 0, 0, 0.54)'}}
               />
             </div>
           </CardActions>
