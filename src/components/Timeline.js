@@ -41,7 +41,7 @@ const Timeline = props =>
             <div style={{display: 'inline-block', textAlign: 'center', width: '33%'}}>
               <FlatButton
                 label={String(listing.data.numComments)}
-                icon={<FontIcon className='material-icons'>comment</FontIcon>}
+                icon={<FontIcon className='material-icons'>chat_bubble_outline</FontIcon>}
               />
             </div>
           </CardActions>
