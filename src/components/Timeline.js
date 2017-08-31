@@ -32,12 +32,19 @@ const styles = {
   scoreText: {
     color: 'rgba(0, 0, 0, 0.54)',
     display: 'inline-block',
-    padding: '0px',
+    padding: '4px',
   },
   voteButton: {
     color: 'rgba(0, 0, 0, 0.54)',
     minWidth: '30px',
   }
+}
+
+const numberShortener = value => {
+  const number = Number(value)
+  return number >= 1000
+    ? `${(number/1000).toFixed(1)}k`
+    : `${number}`
 }
 
 const subtitle = (subreddit, timeAgo, domain) =>
@@ -63,7 +70,7 @@ const Timeline = props =>
               icon={<FontIcon className='material-icons'>arrow_upward</FontIcon>}
               style={styles.voteButton}
             />
-            <CardText style={styles.scoreText}>{listing.data.score}</CardText>
+            <CardText style={styles.scoreText}>{numberShortener(listing.data.score)}</CardText>
             <FlatButton
               icon={<FontIcon className='material-icons'>arrow_downward</FontIcon>}
               style={styles.voteButton}
