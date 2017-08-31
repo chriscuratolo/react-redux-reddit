@@ -32,7 +32,7 @@ const styles = {
   scoreText: {
     color: 'rgba(0, 0, 0, 0.54)',
     display: 'inline-block',
-    padding: '4px',
+    padding: '0px',
   },
   voteButton: {
     color: 'rgba(0, 0, 0, 0.54)',
