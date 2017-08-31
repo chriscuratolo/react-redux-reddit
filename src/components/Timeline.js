@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-import Card, { CardActions, CardHeader, CardText, CardTitle } from 'material-ui/Card'
+import Card, { CardActions, CardHeader, CardText } from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
 import FontIcon from 'material-ui/FontIcon'
 import FlatButton from 'material-ui/FlatButton'
@@ -32,13 +32,9 @@ const Timeline = props =>
         <div key={listing.data.id}>
           <CardHeader
             subtitle={subtitle(listing.data.subredditNamePrefixed, moment.unix(listing.data.createdUtc).fromNow(true), listing.data.domain)}
-            style={{padding: '12px 16px 4px'}}
+            style={{padding: '12px 16px 2px'}}
           />
-          <CardTitle
-            title={listing.data.title}
-            titleStyle={{fontSize: '18px', lineHeight: '27px'}}
-            style={{padding: '4px 16px 16px'}}
-          />
+          <CardText style={{lineHeight: '25px', padding: '2px 16px'}}>{listing.data.title}</CardText>
           <CardActions>
             <div style={{display: 'inline-block', textAlign: 'center', width: '33%'}}>
               <FlatButton

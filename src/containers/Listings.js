@@ -42,11 +42,7 @@ class Listings extends Component {
           showMenuIconButton={false}
         />
         <PageContainer>
-          {
-            pageData
-              ? <Timeline pageData={pageData} />
-              : null
-          }
+          { pageData ? <Timeline pageData={pageData} /> : null }
         </PageContainer>
       </div>
     )
