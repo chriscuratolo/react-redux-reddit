@@ -23,7 +23,7 @@ const title = (subreddit, sorting) => {
       title += `/${sorting}`
     }
   } else {
-    return `Home`
+    return `Reddit`
   }
   return title
 }
