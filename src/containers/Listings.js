@@ -3,11 +3,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import AppBar from 'material-ui/AppBar'
-import { CardText } from 'material-ui/Card'
 
 import { loadListings, paramsToEndpoint } from '../actions'
-import Container from '../components/Container'
-import Page from '../components/Page'
+import PageContainer from '../components/PageContainer'
+import Timeline from '../components/Timeline'
 
 const styles = {
   appBar: {
@@ -31,8 +30,7 @@ const title = (subreddit, sorting) => {
 
 class Listings extends Component {
   componentWillMount() {
-    const { subreddit, sorting } = this.props.params
-    this.props.loadListings(subreddit, sorting)
+    this.props.loadListings(this.props.params)
   }
   render() {
     const { params: { subreddit, sorting }, pageData } = this.props
@@ -43,19 +41,13 @@ class Listings extends Component {
           style={styles.appBar}
           showMenuIconButton={false}
         />
-        <Page>
-          <Container>
-            {
-              pageData
-                ? pageData.map(listing =>
-                    <CardText>
-                      {listing.data.title}
-                    </CardText>
-                  )
-                : null
-            }
-          </Container>
-        </Page>
+        <PageContainer>
+          {
+            pageData
+              ? <Timeline pageData={pageData} />
+              : null
+          }
+        </PageContainer>
       </div>
     )
   }

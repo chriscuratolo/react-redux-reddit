@@ -1,5 +1,18 @@
 import { CALL_API, Schemas } from '../middleware/api'
 
+export const paramsToEndpoint = params => {
+  let endpoint = ``
+  if (params.subreddit) {
+    endpoint += `/r/${params.subreddit}`
+  }
+  if (params.sorting) {
+    endpoint += `/${params.sorting}`
+  } else {
+    endpoint += `/hot`
+  }
+  return endpoint
+}
+
 export const LISTINGS_REQUEST = 'LISTINGS_REQUEST'
 export const LISTINGS_SUCCESS = 'LISTINGS_SUCCESS'
 export const LISTINGS_FAILURE = 'LISTINGS_FAILURE'
@@ -16,8 +29,8 @@ const fetchListings = endpoint => ({
   }
 })
 
-export const loadListings = (subreddit = '', sorting = 'hot') => (dispatch, getState) => {
-  const endpoint = `${subreddit ? `/r/${subreddit}` : ``}/${sorting}`
+export const loadListings = params => (dispatch, getState) => {
+  const endpoint = paramsToEndpoint(params)
 
   if (getState().pagination.listingsByEndpoint[endpoint]) {
     return null
@@ -25,18 +38,3 @@ export const loadListings = (subreddit = '', sorting = 'hot') => (dispatch, getS
 
   return dispatch(fetchListings(endpoint))
 }
-
-export const paramsToEndpoint = params => {
-  let endpoint = ``
-  if (params.subreddit) {
-    endpoint += `/r/${params.subreddit}`
-  }
-  if (params.sorting) {
-    endpoint += `/${params.sorting}`
-  } else {
-    endpoint += `/hot`
-  }
-  return endpoint
-}
-
-// TODO: create a function that generates an endpoint from url params.

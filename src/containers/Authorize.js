@@ -7,8 +7,7 @@ import Card, { CardActions, CardMedia, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { initializeToken } from '../actions'
-import Container from '../components/Container'
-import Page from '../components/Page'
+import PageContainer from '../components/PageContainer'
 
 const authorizationURL = width =>
   `https://www.reddit.com/api/v1/authorize`
@@ -91,8 +90,7 @@ class Authorize extends Component {
           showMenuIconButton={false}
           style={styles.appBar}
         />
-        <Page>
-          <Container>
+        <PageContainer>
             <Card style={styles.card}>
               <CardMedia>
                 <img src='assets/snoo-narwhal.gif' alt='snoo-narwhal' />
@@ -109,14 +107,16 @@ class Authorize extends Component {
                 </a>
               </CardActions>
             </Card>
-          </Container>
-        </Page>
+        </PageContainer>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({ isAuthenticated: state.auth.isAuthenticated })
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  id: state.auth.id,
+})
 
 const mapDispatchToProps = dispatch => bindActionCreators({ initializeToken }, dispatch)
 
