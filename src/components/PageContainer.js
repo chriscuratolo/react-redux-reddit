@@ -4,7 +4,7 @@ const styles = {
   page: {
     margin: '0 auto',
     maxWidth: '890px',
-    padding: '56px 0px 15px',
+    padding: '53px 0px 15px',
   }
 }
 

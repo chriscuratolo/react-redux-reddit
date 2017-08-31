@@ -22,7 +22,8 @@ const Timeline = props =>
         <div key={listing.data.id}>
           <CardTitle
             title={listing.data.title}
-            subtitle={(<div>{listing.data.score} points submitted by <strong>{listing.data.author}</strong> to <strong>{listing.data.subredditNamePrefixed}</strong></div>)}
+            titleStyle={{fontSize: '18px'}}
+            subtitle={(<div>submitted by <strong>{listing.data.author}</strong> to <strong>{listing.data.subredditNamePrefixed}</strong></div>)}
             subtitleStyle={{paddingTop: '10px'}}
           />
           <CardActions>
@@ -39,7 +40,7 @@ const Timeline = props =>
             </div>
             <div style={{display: 'inline-block', textAlign: 'center', width: '33%'}}>
               <FlatButton
-                label={listing.data.numComments}
+                label={String(listing.data.numComments)}
                 icon={<FontIcon className='material-icons'>comment</FontIcon>}
               />
             </div>
