@@ -6,6 +6,8 @@ import Divider from 'material-ui/Divider'
 import FlatButton from 'material-ui/FlatButton'
 import FontIcon from 'material-ui/FontIcon'
 
+const lightGrey = 'rgba(0, 0, 0, 0.54)'
+
 const styles = {
   buttonSection: {
     display: 'inline-block',
@@ -13,46 +15,51 @@ const styles = {
   card: {
     borderRadius: '0',
   },
+  cardActions: {
+    padding: '2px 8px',
+  },
   cardHeader: {
-    padding: '12px 16px 2px',
+    padding: '10px 16px 2px',
+  },
+  cardHeaderIcon: {
+    color: lightGrey,
   },
   cardHeaderSubtitle: {
-    fontSize: '12',
+    fontSize: '9pt',
   },
   cardHeaderText: {
     padding: '0px',
   },
   cardText: {
     display: 'inline-block',
-    lineHeight: '18px',
+    fontSize: '14px',
+    lineHeight: '150%',
     padding: '2px 16px',
-    flexGrow: '100',
   },
   commentsButton: {
-    color: 'rgba(0, 0, 0, 0.54)',
+    color: lightGrey,
+  },
+  commentsButtonLabel: {
+    fontSize: '12px',
+    textTransform: 'none',
   },
   commentsButtonText: {
-    fontSize: '14'
-  },
-  flatButtonLabel: {
-    textTransform: 'none',
+    fontSize: '12pt'
   },
   timeline: {
     margin: '0px auto',
     maxWidth: '588px',
   },
-  scoreText: {
-    color: 'rgba(0, 0, 0, 0.54)',
-    display: 'inline-block',
-    fontSize: '14',
-    padding: '0px',
-  },
   voteButton: {
-    color: 'rgba(0, 0, 0, 0.54)',
+    color: lightGrey,
     minWidth: '30px',
   },
+  voteButtonIcon: {
+    fontSize: '12pt',
+  },
   voteButtonText: {
-    fontSize: '14',
+    fontSize: '12px',
+    padding: '0px 0px 0px 8px',
   },
 }
 
@@ -71,6 +78,8 @@ const Timeline = props =>
     {props.pageData.map(listing =>
       <Card style={styles.card} key={listing.data.id}>
         <CardHeader
+          actAsExpander={true}
+          showExpandableButton={true}
           subtitle={subtitle(
             listing.data.subredditNamePrefixed,
             moment.unix(listing.data.createdUtc).fromNow(true),
@@ -79,31 +88,33 @@ const Timeline = props =>
           subtitleStyle={styles.cardHeaderSubtitle}
           textStyle={styles.cardHeaderText}
           style={styles.cardHeader}
+          iconStyle={styles.cardHeaderIcon}
         />
         <CardText style={styles.cardText}>{listing.data.title}</CardText>
-        <CardActions>
+        <CardActions style={styles.cardActions}>
           <div style={styles.buttonSection}>
             <FlatButton
               disableTouchRipple={true}
               hoverColor='#FFFFFF'
+              label={numberShortener(listing.data.score)}
+              labelStyle={styles.voteButtonText}
               icon={
                 <FontIcon
                   className='material-icons'
-                  style={styles.voteButtonText}
+                  style={styles.voteButtonIcon}
                 >
                   arrow_upward
                 </FontIcon>
               }
               style={styles.voteButton}
             />
-            <CardText style={styles.scoreText}>{numberShortener(listing.data.score)}</CardText>
             <FlatButton
               disableTouchRipple={true}
               hoverColor='#FFFFFF'
               icon={
                 <FontIcon
                   className='material-icons'
-                  style={styles.voteButtonText}
+                  style={styles.voteButtonIcon}
                 >
                   arrow_downward
                 </FontIcon>
@@ -116,7 +127,7 @@ const Timeline = props =>
               disableTouchRipple={true}
               hoverColor='#FFFFFF'
               label={numberShortener(listing.data.numComments)}
-              labelStyle={styles.flatButtonLabel}
+              labelStyle={styles.commentsButtonLabel}
               icon={
                 <FontIcon
                   className='material-icons'
