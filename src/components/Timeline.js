@@ -16,9 +16,6 @@ const styles = {
   cardHeader: {
     padding: '12px 16px 2px',
   },
-  cardHeaderIcon: {
-    color: 'rgba(0, 0, 0, 0.54)',
-  },
   cardHeaderSubtitle: {
     fontSize: '12',
   },
@@ -35,7 +32,7 @@ const styles = {
     color: 'rgba(0, 0, 0, 0.54)',
   },
   commentsButtonText: {
-    fontSize: '12'
+    fontSize: '14'
   },
   timeline: {
     margin: '0px auto',
@@ -52,7 +49,7 @@ const styles = {
     minWidth: '30px',
   },
   voteButtonText: {
-    fontSize: '12',
+    fontSize: '14',
   },
 }
 
@@ -71,9 +68,6 @@ const Timeline = props =>
     {props.pageData.map(listing =>
       <Card style={styles.card} key={listing.data.id}>
         <CardHeader
-          actAsExpander={true}
-          showExpandableButton={true}
-          iconStyle={styles.cardHeaderIcon}
           subtitle={subtitle(
             listing.data.subredditNamePrefixed,
             moment.unix(listing.data.createdUtc).fromNow(true),
