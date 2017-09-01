@@ -25,7 +25,7 @@ const styles = {
     color: lightGrey,
   },
   cardHeaderSubtitle: {
-    fontSize: '9pt',
+    fontSize: '10pt',
   },
   cardHeaderText: {
     padding: '0px',
@@ -34,7 +34,7 @@ const styles = {
     display: 'inline-block',
     fontSize: '14px',
     lineHeight: '150%',
-    padding: '2px 16px',
+    padding: '2px 16px 0px',
   },
   commentsButton: {
     color: lightGrey,
@@ -71,7 +71,9 @@ const numberShortener = value => {
 }
 
 const subtitle = (subreddit, timeAgo, domain) =>
-  `${subreddit} • ${timeAgo} • ${domain}`
+  <div>
+    <strong style={{color: 'black'}}>{subreddit}</strong>{` • ${timeAgo} • ${domain}`}
+  </div>
 
 const Timeline = props =>
   <div style={styles.timeline}>
