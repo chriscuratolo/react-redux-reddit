@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-import Card, { CardActions, CardHeader, CardMedia, CardText } from 'material-ui/Card'
+import Card, { CardActions, CardHeader, CardText } from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
 import FlatButton from 'material-ui/FlatButton'
 import FontIcon from 'material-ui/FontIcon'
@@ -30,13 +30,8 @@ const styles = {
   cardHeaderText: {
     padding: '0px',
   },
-  cardMedia: {
-    padding: '12px 16px',
-  },
   cardText: {
-    display: 'inline-block',
     fontSize: '14px',
-    lineHeight: '150%',
     padding: '2px 16px 0px',
   },
   commentsButton: {
@@ -73,9 +68,9 @@ const numberShortener = value => {
     : `${number}`
 }
 
-const subtitle = (subreddit, timeAgo, domain) =>
+const subtitle = (subreddit, timeAgo) =>
   <div>
-    <strong style={{color: 'black'}}>{subreddit}</strong>{` • ${timeAgo} • ${domain}`}
+    <strong style={{color: 'black'}}>{subreddit}</strong> • {timeAgo}
   </div>
 
 const Timeline = props =>
@@ -90,21 +85,11 @@ const Timeline = props =>
           subtitle={subtitle(
             listing.data.subredditNamePrefixed,
             moment.unix(listing.data.createdUtc).fromNow(true),
-            listing.data.domain
           )}
           subtitleStyle={styles.cardHeaderSubtitle}
           textStyle={styles.cardHeaderText}
         />
         <CardText style={styles.cardText}>{listing.data.title}</CardText>
-        {listing.data.media && listing.data.media.oembed
-            ? <CardMedia style={styles.cardMedia}>
-                <img
-                  alt={listing.data.title}
-                  src={listing.data.media.oembed.thumbnailUrl}
-                />
-              </CardMedia>
-            : null
-        }
         <CardActions style={styles.cardActions}>
           <div style={styles.buttonSection}>
             <FlatButton
