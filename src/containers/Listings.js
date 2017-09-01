@@ -50,9 +50,13 @@ class Listings extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { pagination: { listingsByEndpoint }, entities: { listings } } = state
+  const {
+    pagination: { listingsByEndpoint },
+    entities: { listings },
+  } = state
   const page = listingsByEndpoint[paramsToEndpoint(ownProps.params)]
   const pageData = page && page.ids.map(id => listings[id])
+  console.log(listings)
 
   return { page, pageData }
 }
