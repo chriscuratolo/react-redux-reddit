@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-import Card, { CardActions, CardHeader, CardText } from 'material-ui/Card'
+import Card, { CardActions, CardHeader, CardMedia, CardText } from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
 import FlatButton from 'material-ui/FlatButton'
 import FontIcon from 'material-ui/FontIcon'
@@ -29,6 +29,9 @@ const styles = {
   },
   cardHeaderText: {
     padding: '0px',
+  },
+  cardMedia: {
+    padding: '12px 16px',
   },
   cardText: {
     display: 'inline-block',
@@ -84,7 +87,7 @@ const Timeline = props =>
           showExpandableButton={true}
           subtitle={subtitle(
             listing.data.subredditNamePrefixed,
-            moment.unix(listing.data.createdUtc).fromNow(),
+            moment.unix(listing.data.createdUtc).fromNow(true),
             listing.data.domain
           )}
           subtitleStyle={styles.cardHeaderSubtitle}
@@ -93,6 +96,17 @@ const Timeline = props =>
           iconStyle={styles.cardHeaderIcon}
         />
         <CardText style={styles.cardText}>{listing.data.title}</CardText>
+        {listing.data.media && listing.data.media.oembed
+            ? <CardMedia
+                style={styles.cardMedia}
+              >
+                <img
+                  alt={listing.data.title}
+                  src={listing.data.media.oembed.thumbnailUrl}
+                />
+              </CardMedia>
+            : null
+        }
         <CardActions style={styles.cardActions}>
           <div style={styles.buttonSection}>
             <FlatButton
