@@ -112,7 +112,7 @@ const Timeline = props =>
             <FlatButton
               disableTouchRipple={true}
               hoverColor='#FFFFFF'
-              label={String(listing.data.numComments)}
+              label={numberShortener(listing.data.numComments)}
               icon={
                 <FontIcon
                   className='material-icons'
