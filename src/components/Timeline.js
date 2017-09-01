@@ -84,7 +84,7 @@ const Timeline = props =>
           showExpandableButton={true}
           subtitle={subtitle(
             listing.data.subredditNamePrefixed,
-            moment.unix(listing.data.createdUtc).fromNow(true),
+            moment.unix(listing.data.createdUtc).fromNow(),
             listing.data.domain
           )}
           subtitleStyle={styles.cardHeaderSubtitle}
