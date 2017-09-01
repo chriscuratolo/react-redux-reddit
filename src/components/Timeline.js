@@ -34,6 +34,9 @@ const styles = {
   commentsButtonText: {
     fontSize: '14'
   },
+  flatButtonLabel: {
+    textTransform: 'none',
+  },
   timeline: {
     margin: '0px auto',
     maxWidth: '588px',
@@ -113,6 +116,7 @@ const Timeline = props =>
               disableTouchRipple={true}
               hoverColor='#FFFFFF'
               label={numberShortener(listing.data.numComments)}
+              labelStyle={styles.flatButtonLabel}
               icon={
                 <FontIcon
                   className='material-icons'
