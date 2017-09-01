@@ -9,11 +9,15 @@ import FontIcon from 'material-ui/FontIcon'
 const styles = {
   buttonSection: {
     display: 'inline-block',
-    textAlign: 'center',
-    width: '33%',
+  },
+  card: {
+    borderRadius: '0',
   },
   cardHeader: {
     padding: '12px 16px 2px',
+  },
+  cardHeaderIcon: {
+    color: 'rgba(0, 0, 0, 0.54)',
   },
   cardHeaderSubtitle: {
     fontSize: '12',
@@ -63,10 +67,13 @@ const subtitle = (subreddit, timeAgo, domain) =>
   `${subreddit} • ${timeAgo} • ${domain}`
 
 const Timeline = props =>
-  <Card style={styles.timeline}>
+  <div style={styles.timeline}>
     {props.pageData.map(listing =>
-      <div key={listing.data.id}>
+      <Card style={styles.card} key={listing.data.id}>
         <CardHeader
+          actAsExpander={true}
+          showExpandableButton={true}
+          iconStyle={styles.cardHeaderIcon}
           subtitle={subtitle(
             listing.data.subredditNamePrefixed,
             moment.unix(listing.data.createdUtc).fromNow(true),
@@ -80,6 +87,8 @@ const Timeline = props =>
         <CardActions>
           <div style={styles.buttonSection}>
             <FlatButton
+              disableTouchRipple={true}
+              hoverColor='#FFFFFF'
               icon={
                 <FontIcon
                   className='material-icons'
@@ -92,6 +101,8 @@ const Timeline = props =>
             />
             <CardText style={styles.scoreText}>{numberShortener(listing.data.score)}</CardText>
             <FlatButton
+              disableTouchRipple={true}
+              hoverColor='#FFFFFF'
               icon={
                 <FontIcon
                   className='material-icons'
@@ -105,6 +116,8 @@ const Timeline = props =>
           </div>
           <div style={styles.buttonSection}>
             <FlatButton
+              disableTouchRipple={true}
+              hoverColor='#FFFFFF'
               label={String(listing.data.numComments)}
               icon={
                 <FontIcon
@@ -119,8 +132,8 @@ const Timeline = props =>
           </div>
         </CardActions>
         <Divider />
-      </div>
+      </Card>
     )}
-  </Card>
+  </div>
 
 export default Timeline
