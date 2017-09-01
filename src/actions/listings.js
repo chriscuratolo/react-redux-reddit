@@ -10,6 +10,9 @@ export const paramsToEndpoint = params => {
   } else {
     endpoint += `/hot`
   }
+  if (params.after) {
+    endpoint += `?after=${params.after}`
+  }
   return endpoint
 }
 

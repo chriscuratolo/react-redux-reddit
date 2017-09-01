@@ -23,23 +23,32 @@ const title = (subreddit, sorting) => {
       title += `/${sorting}`
     }
   } else {
-    return `reddit`
+    title += `reddit`
   }
   return title
 }
 
+// TODO:
+// 1. Figure out the flow of loading pages as users scrolls down page.
 class Listings extends Component {
   componentWillMount() {
-    this.props.loadListings(this.props.params)
+    console.log(Object.assign({},
+      this.props.params,
+      this.props.location.query
+    ))
+    this.props.loadListings(Object.assign({},
+      this.props.params,
+      this.props.location.query
+    ))
   }
   render() {
     const { params: { subreddit, sorting }, pageData } = this.props
     return (
       <div>
         <AppBar
-          title={title(subreddit, sorting)}
-          style={styles.appBar}
           showMenuIconButton={false}
+          style={styles.appBar}
+          title={title(subreddit, sorting)}
         />
         <PageContainer>
           { pageData ? <Timeline pageData={pageData} /> : null }
@@ -54,11 +63,39 @@ const mapStateToProps = (state, ownProps) => {
     pagination: { listingsByEndpoint },
     entities: { listings },
   } = state
-  const page = listingsByEndpoint[paramsToEndpoint(ownProps.params)]
-  const pageData = page && page.ids.map(id => listings[id])
-  console.log(listings)
 
-  return { page, pageData }
+  // Populates pages array.
+  const pages = []
+  let endpoint = paramsToEndpoint(Object.assign({},
+    ownProps.params,
+    ownProps.location.query
+  ))
+  while (endpoint && listingsByEndpoint[endpoint]) {
+    const page = listingsByEndpoint[endpoint]
+    pages.push(page)
+    if (page.after) {
+      const nextPageParams = Object.assign({}, ownProps.params, {
+        after: page.after
+      })
+      endpoint = paramsToEndpoint(nextPageParams)
+    } else {
+      endpoint = null
+    }
+  }
+
+  // Aggregates the listings in the pageData array by page.
+  // TODO: test if perfomance is better if pageData is divided by page.
+  const pageData = []
+  for (let page in pages) {
+    if (Object.keys(listings).length > 0 && pages[page] && pages[page].ids) {
+      const pageListings = pages[page].ids.map(id => listings[id])
+      for (let listing in pageListings) {
+        pageData.push(pageListings[listing])
+      }
+    }
+  }
+
+  return { pages, pageData }
 }
 
 const mapDispatchToProps = dispatch =>
