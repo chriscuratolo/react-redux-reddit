@@ -81,10 +81,12 @@ const subtitle = (subreddit, timeAgo, domain) =>
 const Timeline = props =>
   <div style={styles.timeline}>
     {props.pageData.map(listing =>
-      <Card style={styles.card} key={listing.data.id}>
+      <Card key={listing.data.id} style={styles.card}>
         <CardHeader
           actAsExpander={true}
+          iconStyle={styles.cardHeaderIcon}
           showExpandableButton={true}
+          style={styles.cardHeader}
           subtitle={subtitle(
             listing.data.subredditNamePrefixed,
             moment.unix(listing.data.createdUtc).fromNow(true),
@@ -92,14 +94,10 @@ const Timeline = props =>
           )}
           subtitleStyle={styles.cardHeaderSubtitle}
           textStyle={styles.cardHeaderText}
-          style={styles.cardHeader}
-          iconStyle={styles.cardHeaderIcon}
         />
         <CardText style={styles.cardText}>{listing.data.title}</CardText>
         {listing.data.media && listing.data.media.oembed
-            ? <CardMedia
-                style={styles.cardMedia}
-              >
+            ? <CardMedia style={styles.cardMedia}>
                 <img
                   alt={listing.data.title}
                   src={listing.data.media.oembed.thumbnailUrl}
@@ -112,26 +110,20 @@ const Timeline = props =>
             <FlatButton
               disableTouchRipple={true}
               hoverColor='#FFFFFF'
-              label={numberShortener(listing.data.score)}
-              labelStyle={styles.voteButtonText}
               icon={
-                <FontIcon
-                  className='material-icons'
-                  style={styles.voteButtonIcon}
-                >
+                <FontIcon className='material-icons' style={styles.voteButtonIcon}>
                   arrow_upward
                 </FontIcon>
               }
+              label={numberShortener(listing.data.score)}
+              labelStyle={styles.voteButtonText}
               style={styles.voteButton}
             />
             <FlatButton
               disableTouchRipple={true}
               hoverColor='#FFFFFF'
               icon={
-                <FontIcon
-                  className='material-icons'
-                  style={styles.voteButtonIcon}
-                >
+                <FontIcon className='material-icons' style={styles.voteButtonIcon}>
                   arrow_downward
                 </FontIcon>
               }
@@ -142,16 +134,13 @@ const Timeline = props =>
             <FlatButton
               disableTouchRipple={true}
               hoverColor='#FFFFFF'
-              label={numberShortener(listing.data.numComments)}
-              labelStyle={styles.commentsButtonLabel}
               icon={
-                <FontIcon
-                  className='material-icons'
-                  style={styles.commentsButtonText}
-                >
+                <FontIcon className='material-icons' style={styles.commentsButtonText}>
                   comment
                 </FontIcon>
               }
+              label={numberShortener(listing.data.numComments)}
+              labelStyle={styles.commentsButtonLabel}
               style={styles.commentsButton}
             />
           </div>
