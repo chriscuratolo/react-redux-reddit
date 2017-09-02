@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import AppBar from 'material-ui/AppBar'
+import FlatButton from 'material-ui/FlatButton'
 
 import { loadListings, paramsToEndpoint } from '../actions'
 import PageContainer from '../components/PageContainer'
@@ -12,10 +13,28 @@ const styles = {
   appBar: {
     position: 'fixed',
     top: 0,
-  }
+  },
+  appBarContainer: {
+    margin: 'auto',
+    maxWidth: '558px',
+  },
+  revokeToken: {
+    color: 'white',
+    bottom: '3px',
+  },
+  revokeTokenContainer: {
+    display: 'inline-block',
+    float: 'right',
+  },
+  revokeTokenLabel: {
+    padding: '0px',
+  },
+  titleContainer: {
+    display: 'inline-block',
+  },
 }
 
-const title = (subreddit, sorting) => {
+const appBarContainer = (subreddit, sorting) => {
   let title = ''
   if (subreddit) {
     title += `r/${subreddit}`
@@ -25,21 +44,44 @@ const title = (subreddit, sorting) => {
   } else {
     title += `reddit`
   }
-  return title
+  return (
+    <div style={styles.appBarContainer}>
+      <div style={styles.titleContainer}>
+        {title}
+      </div>
+      <div style={styles.revokeTokenContainer}>
+        <FlatButton
+          disableTouchRipple={true}
+          hoverColor='#00BCD4'
+          label='revoke token'
+          labelStyle={styles.revokeTokenLabel}
+          style={styles.revokeToken}
+        />
+      </div>
+    </div>
+  )
 }
 
-// TODO:
-// 1. Figure out the flow of loading pages as users scrolls down page.
+// TODO: Figure out the flow of loading pages as users scrolls down page.
 class Listings extends Component {
   componentWillMount() {
-    console.log(Object.assign({},
-      this.props.params,
-      this.props.location.query
-    ))
+    // Combines subreddit & sorting (params) w/ count & after (location.query)
     this.props.loadListings(Object.assign({},
       this.props.params,
       this.props.location.query
     ))
+  }
+  componentDidMount() {
+    const root = document.querySelector('#root')
+    root.addEventListener('scroll', () => {
+      const { offsetHeight, scrollHeight, scrollTop } = root
+      console.log(
+        'offsetHeight', offsetHeight,
+        'scrollTop', scrollTop,
+        'scrollHeight', scrollHeight,
+      )
+      console.log('should i get more items?', scrollTop + offsetHeight >= scrollHeight - offsetHeight && scrollHeight > offsetHeight)
+    })
   }
   render() {
     const { params: { subreddit, sorting }, pageData } = this.props
@@ -48,7 +90,7 @@ class Listings extends Component {
         <AppBar
           showMenuIconButton={false}
           style={styles.appBar}
-          title={title(subreddit, sorting)}
+          title={appBarContainer(subreddit, sorting)}
         />
         <PageContainer>
           { pageData ? <Timeline pageData={pageData} /> : null }
@@ -74,9 +116,7 @@ const mapStateToProps = (state, ownProps) => {
     const page = listingsByEndpoint[endpoint]
     pages.push(page)
     if (page.after) {
-      const nextPageParams = Object.assign({}, ownProps.params, {
-        after: page.after
-      })
+      const nextPageParams = Object.assign({}, ownProps.params, { after: page.after })
       endpoint = paramsToEndpoint(nextPageParams)
     } else {
       endpoint = null

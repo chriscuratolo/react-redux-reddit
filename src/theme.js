@@ -4,7 +4,7 @@ const theme = getMuiTheme({
   appBar: {
     height: 46,
   },
-  fontFamily: 'Roboto, sans-serif',
+  fontFamily: 'Source Sans Pro, sans-serif',
 })
 
 export default theme

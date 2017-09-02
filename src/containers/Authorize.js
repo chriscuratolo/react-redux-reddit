@@ -49,7 +49,9 @@ const styles = {
 
 class Authorize extends Component {
   state = { width: null, height: null }
-  updateWindowDimensions = () => this.setState({ width: window.innerWidth, height: window.innerHeight })
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth, height: window.innerHeight })
+  }
   componentWillMount() {
     if (this.props.isAuthenticated) {
       this.props.router.push('/')

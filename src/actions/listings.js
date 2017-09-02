@@ -1,5 +1,6 @@
 import { CALL_API, Schemas } from '../middleware/api'
 
+// TODO: add count param
 export const paramsToEndpoint = params => {
   let endpoint = ``
   if (params.subreddit) {

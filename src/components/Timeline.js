@@ -21,9 +21,6 @@ const styles = {
   cardHeader: {
     padding: '10px 16px 2px',
   },
-  cardHeaderIcon: {
-    color: lightGrey,
-  },
   cardHeaderSubtitle: {
     fontSize: '10pt',
   },
@@ -78,9 +75,6 @@ const Timeline = props =>
     {props.pageData.map(listing =>
       <Card key={listing.data.id} style={styles.card}>
         <CardHeader
-          actAsExpander={true}
-          iconStyle={styles.cardHeaderIcon}
-          showExpandableButton={true}
           style={styles.cardHeader}
           subtitle={subtitle(
             listing.data.subredditNamePrefixed,
