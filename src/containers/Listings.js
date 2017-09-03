@@ -2,65 +2,10 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import AppBar from 'material-ui/AppBar'
-import FlatButton from 'material-ui/FlatButton'
-
 import { loadListings, paramsToEndpoint } from '../actions'
+import Nav from '../components/Nav'
 import PageContainer from '../components/PageContainer'
 import Timeline from '../components/Timeline'
-
-const styles = {
-  appBar: {
-    position: 'fixed',
-    top: 0,
-  },
-  appBarContainer: {
-    margin: 'auto',
-    maxWidth: '558px',
-  },
-  revokeToken: {
-    color: 'white',
-    bottom: '3px',
-  },
-  revokeTokenContainer: {
-    display: 'inline-block',
-    float: 'right',
-  },
-  revokeTokenLabel: {
-    padding: '0px',
-  },
-  titleContainer: {
-    display: 'inline-block',
-  },
-}
-
-const appBarContainer = (subreddit, sorting) => {
-  let title = ''
-  if (subreddit) {
-    title += `r/${subreddit}`
-    if (sorting && sorting !== 'hot') {
-      title += `/${sorting}`
-    }
-  } else {
-    title += `reddit`
-  }
-  return (
-    <div style={styles.appBarContainer}>
-      <div style={styles.titleContainer}>
-        {title}
-      </div>
-      <div style={styles.revokeTokenContainer}>
-        <FlatButton
-          disableTouchRipple={true}
-          hoverColor='#00BCD4'
-          label='revoke token'
-          labelStyle={styles.revokeTokenLabel}
-          style={styles.revokeToken}
-        />
-      </div>
-    </div>
-  )
-}
 
 // TODO: Figure out the flow of loading pages as users scrolls down page.
 class Listings extends Component {
@@ -84,14 +29,10 @@ class Listings extends Component {
     })
   }
   render() {
-    const { params: { subreddit, sorting }, pageData } = this.props
+    const { pageData } = this.props
     return (
       <div>
-        <AppBar
-          showMenuIconButton={false}
-          style={styles.appBar}
-          title={appBarContainer(subreddit, sorting)}
-        />
+        <Nav />
         <PageContainer>
           { pageData ? <Timeline pageData={pageData} /> : null }
         </PageContainer>
