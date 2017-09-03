@@ -7,7 +7,6 @@ import Nav from '../components/Nav'
 import PageContainer from '../components/PageContainer'
 import Timeline from '../components/Timeline'
 
-// TODO: Figure out the flow of loading pages as users scrolls down page.
 class Listings extends Component {
   componentWillMount() {
     // Combines subreddit & sorting (params) w/ count & after (location.query)
@@ -19,13 +18,30 @@ class Listings extends Component {
   componentDidMount() {
     const root = document.querySelector('#root')
     root.addEventListener('scroll', () => {
+      /*
+       * offsetHeight => height of the window
+       *  scrollHeight => height of content
+       *  scrollTop    => top of window
+       *
+       *  If bottom of view is within a page-length away from bottom
+       *  and height of content is larger than the height of the view,
+       *  then load another page.
+       */
+
       const { offsetHeight, scrollHeight, scrollTop } = root
-      console.log(
-        'offsetHeight', offsetHeight,
-        'scrollTop', scrollTop,
-        'scrollHeight', scrollHeight,
-      )
-      console.log('should i get more items?', scrollTop + offsetHeight >= scrollHeight - offsetHeight && scrollHeight > offsetHeight)
+      const withinPageLengthFromBottom = scrollTop + offsetHeight >= scrollHeight - offsetHeight
+      const heightOfContentLargerThanView = scrollHeight > offsetHeight
+
+      if (withinPageLengthFromBottom && heightOfContentLargerThanView) {
+        const { pages } = this.props
+        const lastPage = pages[pages.length - 1]
+
+        this.props.loadListings(Object.assign({},
+          this.props.params,
+          this.props.loadListings.query,
+          { after: lastPage.after }
+        ))
+      }
     })
   }
   render() {
