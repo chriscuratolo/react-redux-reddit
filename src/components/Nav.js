@@ -9,7 +9,7 @@ const styles = {
     position: 'fixed',
     width: '100vw',
     top: '0px',
-    zIndex: '500',
+    zIndex: '1',
   },
   navInner: {
     margin: 'auto',

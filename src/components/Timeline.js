@@ -37,6 +37,7 @@ const styles = {
   },
   commentsButton: {
     color: lightGrey,
+    zIndex: '0',
   },
   commentsButtonLabel: {
     fontSize: '12px',
@@ -52,6 +53,7 @@ const styles = {
   voteButton: {
     color: lightGrey,
     minWidth: '30px',
+    zIndex: '0',
   },
   voteButtonIcon: {
     fontSize: '12pt',
