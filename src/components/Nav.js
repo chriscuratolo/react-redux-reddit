@@ -11,7 +11,7 @@ const styles = {
     zIndex: '500',
   },
   navInner: {
-    margin: '5px auto',
+    margin: '3px auto',
     maxWidth: '590px',
     textAlign: 'center'
   },
@@ -25,7 +25,7 @@ const styles = {
 const Nav = props =>
   <Paper className='nav' style={styles.nav}>
     <div style={styles.navInner}>
-        <img alt='logo' height='36px' src='assets/logo.png' />
+        <img alt='logo' height='40px' src='assets/logo.png' />
     </div>
   </Paper>
 
