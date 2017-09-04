@@ -73,7 +73,7 @@ const numberShortener = value => {
 
 const loading =
   <div style={styles.circularProgress}>
-    <CircularProgress color={lightGrey} />
+    <CircularProgress color={lightGrey} size={30} />
   </div>
 
 const subtitle = (subreddit, timeAgo) => `${subreddit} • ${timeAgo}`

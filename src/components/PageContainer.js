@@ -2,9 +2,7 @@ import React from 'react'
 
 const styles = {
   pageContainer: {
-    margin: '53px auto',
-    maxWidth: '890px',
-    zIndex: '-1',
+    margin: '53px auto 8px auto',
   }
 }
 

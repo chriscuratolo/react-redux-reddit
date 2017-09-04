@@ -6,7 +6,7 @@ const styles = {
     overflowX: 'hidden',
     overflowY: 'scroll',
     webkitOverflowScrolling: 'touch',
-  }
+  },
 }
 
 const Page = props =>

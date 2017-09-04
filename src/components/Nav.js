@@ -7,9 +7,9 @@ const styles = {
   nav: {
     height: '46px',
     position: 'fixed',
-    width: '100vw',
-    top: '0px',
-    zIndex: '1100',
+    top: '0',
+    width: '100%',
+    zIndex: '2',
   },
   navInner: {
     margin: 'auto',
