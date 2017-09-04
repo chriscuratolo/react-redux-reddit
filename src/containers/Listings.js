@@ -73,7 +73,10 @@ const mapStateToProps = (state, ownProps) => {
     const page = listingsByEndpoint[endpoint]
     pages.push(page)
     if (page.after) {
-      const nextPageParams = Object.assign({}, ownProps.params, { after: page.after })
+      const nextPageParams = Object.assign({},
+        ownProps.params,
+        { after: page.after }
+      )
       endpoint = paramsToEndpoint(nextPageParams)
     } else {
       endpoint = null
