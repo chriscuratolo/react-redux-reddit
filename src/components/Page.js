@@ -5,7 +5,7 @@ const styles = {
     height: '100vh',
     overflowX: 'hidden',
     overflowY: 'scroll',
-    webkitOverflowScrolling: 'touch',
+    WebkitOverflowScrolling: 'touch',
   },
 }
 
