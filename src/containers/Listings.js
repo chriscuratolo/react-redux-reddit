@@ -17,8 +17,8 @@ class Listings extends Component {
     ))
   }
   componentDidMount() {
-    const pageElement = document.querySelector('.page')
-    pageElement.addEventListener('scroll', () => {
+    const pageContainer = document.querySelector('.page-container')
+    pageContainer.addEventListener('scroll', () => {
       /*
        * offsetHeight => height of the window
        *  scrollHeight => height of content
@@ -29,7 +29,7 @@ class Listings extends Component {
        *  then load another page.
        */
 
-      const { offsetHeight, scrollHeight, scrollTop } = pageElement
+      const { offsetHeight, scrollHeight, scrollTop } = pageContainer
       const withinPageLengthFromBottom = scrollTop + offsetHeight >= scrollHeight - offsetHeight
       const heightOfContentLargerThanView = scrollHeight > offsetHeight
 
@@ -45,8 +45,8 @@ class Listings extends Component {
       }
     })
 
-    const header = document.querySelector('header')
-    header.addEventListener('click', () => window.scrollToTop(pageElement))
+    const nav = document.querySelector('.nav')
+    nav.addEventListener('click', () => window.scrollToTop(pageContainer))
   }
   render() {
     const { pageData, isFetching } = this.props

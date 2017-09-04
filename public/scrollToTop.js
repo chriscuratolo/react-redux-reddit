@@ -3,32 +3,34 @@
  * https://github.com/prud/ios-overflow-scroll-to-top
  */
 
-const scrollToTop = el => {
+var scrollToTop = function(el) {
 
-  el = typeof el === 'object' ? el : document.querySelector(el)
-  if (!el) { return }
+  el = typeof el === 'object' ? el : document.querySelector(el);
+  if (!el) { return; }
 
-  const offset = el.scrollTop
-  if (offset === 0) { return }
+  var offset = el.scrollTop;
+  if (offset === 0) { return; }
 
-  el.style.overflow = 'hidden' // stops momentum scrolling
-  const stepSize = offset / (offset < 1000 ?  15 : 30)
+  el.style.overflow = 'hidden'; // stops momentum scrolling
+  var stepSize = offset / (offset < 1000 ?  15 : 30);
 
-  const _animate = () => {
+  var _animate = function() {
 
-    el.scrollTop -= stepSize
+    el.scrollTop -= stepSize;
 
     if (el.scrollTop > 0) { // keep scrolling up
-      setTimeout(_animate, 10)
-    } else { // enough
-      _onFinish()
+      setTimeout(_animate, 10);
     }
-  }
+    else { // enough
+      _onFinish();
+    }
+  };
 
-  const _onFinish = () => {
-    el.scrollTop = 0
-    el.style.overflow = null
-  }
+  var _onFinish = function() {
+    el.scrollTop = 0;
+    el.style.overflowY = 'scroll';
+  };
 
-  _animate()
-}
+  _animate();
+};
+

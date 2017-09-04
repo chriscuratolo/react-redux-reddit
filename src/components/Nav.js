@@ -6,10 +6,10 @@ import Paper from 'material-ui/Paper'
 const styles = {
   nav: {
     height: '46px',
-    position: 'fixed',
+    position: 'absolute',
     top: '0',
     width: '100%',
-    zIndex: '2',
+    zIndex: '1',
   },
   navInner: {
     margin: 'auto',
@@ -24,7 +24,7 @@ const styles = {
 }
 
 const Nav = props =>
-  <Paper style={styles.nav}>
+  <Paper className='nav' style={styles.nav}>
     <div style={styles.navInner}>
       <CardText style={styles.title}>reddit</CardText>
     </div>

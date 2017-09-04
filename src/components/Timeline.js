@@ -48,7 +48,7 @@ const styles = {
     fontSize: '12pt'
   },
   timeline: {
-    margin: '0px auto',
+    margin: '8px auto',
     maxWidth: '588px',
   },
   voteButton: {
@@ -80,8 +80,8 @@ const subtitle = (subreddit, timeAgo) => `${subreddit} • ${timeAgo}`
 
 const Timeline = props =>
   <div style={styles.timeline}>
-    {props.pageData.map(listing =>
-      <Card key={listing.data.id} style={styles.card}>
+    {props.pageData.map((listing, index) =>
+      <Card key={index} style={styles.card}>
         <CardHeader
           style={styles.cardHeader}
           subtitle={subtitle(
