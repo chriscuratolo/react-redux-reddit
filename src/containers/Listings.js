@@ -45,12 +45,19 @@ class Listings extends Component {
     })
   }
   render() {
-    const { pageData } = this.props
+    const { pageData, isFetching } = this.props
     return (
       <div>
         <Nav />
         <PageContainer>
-          { pageData ? <Timeline pageData={pageData} /> : null }
+          {
+            pageData
+              ? <Timeline
+                  isFetching={isFetching}
+                  pageData={pageData}
+                />
+              : null
+          }
         </PageContainer>
       </div>
     )
@@ -85,9 +92,11 @@ const mapStateToProps = (state, ownProps) => {
 
   // Aggregates the listings in the pageData array by page.
   // TODO: test if perfomance is better if pageData is divided by page.
+  // TODO: figure out best way to express that next page is loading.
   const pageData = []
+  let isFetching = false
   for (let page in pages) {
-    if (Object.keys(listings).length > 0 && pages[page] && pages[page].ids) {
+    if (Object.keys(listings).length > 0 && pages[page]) {
       const pageListings = pages[page].ids.map(id => listings[id])
       for (let listing in pageListings) {
         pageData.push(pageListings[listing])
@@ -95,7 +104,7 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
 
-  return { pages, pageData }
+  return { pages, pageData, isFetching }
 }
 
 const mapDispatchToProps = dispatch =>

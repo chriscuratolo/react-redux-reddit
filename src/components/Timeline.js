@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 
 import Card, { CardActions, CardHeader, CardText } from 'material-ui/Card'
+import CircularProgress from 'material-ui/CircularProgress'
 import Divider from 'material-ui/Divider'
 import FlatButton from 'material-ui/FlatButton'
 import FontIcon from 'material-ui/FontIcon'
@@ -30,6 +31,9 @@ const styles = {
   cardText: {
     fontSize: '14px',
     padding: '2px 16px 0px',
+  },
+  circularProgress: {
+    marginLeft: '50%',
   },
   commentsButton: {
     color: lightGrey,
@@ -127,6 +131,16 @@ const Timeline = props =>
         <Divider />
       </Card>
     )}
+    {props.isFetching
+        ? <Card>
+            <CircularProgress
+              left={-20}
+              size={40}
+              style={styles.circularProgress}
+              top={10}
+            />
+          </Card>
+        : null}
   </div>
 
 export default Timeline
