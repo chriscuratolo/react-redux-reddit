@@ -30,14 +30,15 @@ const styles = {
   },
   cardText: {
     fontSize: '14px',
+    lineHeight: '150%',
     padding: '2px 16px 0px',
   },
   circularProgress: {
-    marginLeft: '50%',
+    padding: '16px',
+    textAlign: 'center',
   },
   commentsButton: {
     color: lightGrey,
-    zIndex: '0',
   },
   commentsButtonLabel: {
     fontSize: '12px',
@@ -53,7 +54,6 @@ const styles = {
   voteButton: {
     color: lightGrey,
     minWidth: '30px',
-    zIndex: '0',
   },
   voteButtonIcon: {
     fontSize: '12pt',
@@ -71,10 +71,12 @@ const numberShortener = value => {
     : `${number}`
 }
 
-const subtitle = (subreddit, timeAgo) =>
-  <div>
-    <strong style={{color: 'black'}}>{subreddit}</strong> • {timeAgo}
+const loading =
+  <div style={styles.circularProgress}>
+    <CircularProgress color={lightGrey} />
   </div>
+
+const subtitle = (subreddit, timeAgo) => `${subreddit} • ${timeAgo}`
 
 const Timeline = props =>
   <div style={styles.timeline}>
@@ -133,16 +135,7 @@ const Timeline = props =>
         <Divider />
       </Card>
     )}
-    {props.isFetching
-        ? <Card>
-            <CircularProgress
-              left={-20}
-              size={40}
-              style={styles.circularProgress}
-              top={10}
-            />
-          </Card>
-        : null}
+    {props.isFetching ? <Card>{loading}</Card> : null}
   </div>
 
 export default Timeline

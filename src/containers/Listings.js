@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { loadListings, paramsToEndpoint } from '../actions'
 import Nav from '../components/Nav'
+import Page from '../components/Page'
 import PageContainer from '../components/PageContainer'
 import Timeline from '../components/Timeline'
 
@@ -16,8 +17,8 @@ class Listings extends Component {
     ))
   }
   componentDidMount() {
-    const root = document.querySelector('#root')
-    root.addEventListener('scroll', () => {
+    const pageElement = document.querySelector('.page')
+    pageElement.addEventListener('scroll', () => {
       /*
        * offsetHeight => height of the window
        *  scrollHeight => height of content
@@ -28,7 +29,7 @@ class Listings extends Component {
        *  then load another page.
        */
 
-      const { offsetHeight, scrollHeight, scrollTop } = root
+      const { offsetHeight, scrollHeight, scrollTop } = pageElement
       const withinPageLengthFromBottom = scrollTop + offsetHeight >= scrollHeight - offsetHeight
       const heightOfContentLargerThanView = scrollHeight > offsetHeight
 
@@ -47,19 +48,12 @@ class Listings extends Component {
   render() {
     const { pageData, isFetching } = this.props
     return (
-      <div>
+      <Page>
         <Nav />
         <PageContainer>
-          {
-            pageData
-              ? <Timeline
-                  isFetching={isFetching}
-                  pageData={pageData}
-                />
-              : null
-          }
+          {pageData ? <Timeline isFetching={isFetching} pageData={pageData} /> : null}
         </PageContainer>
-      </div>
+      </Page>
     )
   }
 }
@@ -97,9 +91,13 @@ const mapStateToProps = (state, ownProps) => {
   let isFetching = false
   for (let page in pages) {
     if (Object.keys(listings).length > 0 && pages[page]) {
-      const pageListings = pages[page].ids.map(id => listings[id])
-      for (let listing in pageListings) {
-        pageData.push(pageListings[listing])
+      if (!pages[page].isFetching) {
+        const pageListings = pages[page].ids.map(id => listings[id])
+        for (let listing in pageListings) {
+          pageData.push(pageListings[listing])
+        }
+      } else {
+        isFetching = true
       }
     }
   }

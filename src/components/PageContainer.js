@@ -1,15 +1,15 @@
 import React from 'react'
 
 const styles = {
-  page: {
-    margin: '0 auto',
+  pageContainer: {
+    margin: '53px auto',
     maxWidth: '890px',
-    padding: '53px 0px 15px',
+    zIndex: '-1',
   }
 }
 
 const PageContainer = props =>
-  <div style={styles.page}>
+  <div style={styles.pageContainer}>
     {props.children}
   </div>
 
