@@ -1,1 +1,1 @@
-# react-reddit-client
+# react-redux-reddit
