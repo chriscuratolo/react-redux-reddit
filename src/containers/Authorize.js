@@ -2,16 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import AppBar from 'material-ui/AppBar'
-import Card, { CardActions, CardMedia, CardText } from 'material-ui/Card'
-import RaisedButton from 'material-ui/RaisedButton'
+import Card, { CardActions, CardText, CardTitle } from 'material-ui/Card'
+import Divider from 'material-ui/Divider'
+import FlatButton from 'material-ui/FlatButton'
 
 import { initializeToken } from '../actions'
+import Nav from '../components/Nav'
 import Page from '../components/Page'
+import PageContainer from '../components/PageContainer'
 
 const authorizationURL = width =>
   `https://www.reddit.com/api/v1/authorize`
-    + `${width && width > 600 ? '' : '.compact'}`
+    + `${width && width > 590 ? '' : '.compact'}`
     + `?client_id=${process.env.REACT_APP_CLIENT_ID}`
     + `&response_type=code`
     + `&state=${localStorage.getItem('authState')}`
@@ -31,20 +33,17 @@ const randomString = length => {
 }
 
 const styles = {
-  appBar: {
-    position: 'fixed',
-    top: 0,
-  },
   card: {
-    margin: '23px auto',
-    maxWidth: '600px',
+    margin: '6% auto',
+    maxWidth: '590px',
+  },
+  cardText: {
+    fontSize: '14px',
+    lineHeight: '150%',
   },
   cardActions: {
     textAlign: 'right',
   },
-  text: {
-    color: 'rgba(0, 0, 0, 0.54)',
-  }
 }
 
 class Authorize extends Component {
@@ -87,27 +86,24 @@ class Authorize extends Component {
   render() {
     return (
       <Page>
-        <AppBar
-          title='reddit'
-          showMenuIconButton={false}
-          style={styles.appBar}
-        />
-        <Card style={styles.card}>
-          <CardMedia>
-            <img src='assets/snoo-narwhal.gif' alt='snoo-narwhal' />
-          </CardMedia>
-          <CardText>
-            <h1>Authorization</h1>
-            <p style={styles.text}>
+        <Nav />
+        <PageContainer>
+          <Card style={styles.card}>
+            <CardTitle title='Authorization' />
+            <Divider />
+            <CardText style={styles.cardText}>
               In order to make requests to reddit's API via OAuth, you must grant the reddit client an <a href='https://github.com/reddit/reddit/wiki/OAuth2#authorization'>authorization token</a>.
-            </p>
-          </CardText>
-          <CardActions style={styles.cardActions}>
-            <a href={authorizationURL(this.state.width)}>
-              <RaisedButton label='Authorize' primary={true} />
-            </a>
-          </CardActions>
-        </Card>
+            </CardText>
+            <CardActions style={styles.cardActions}>
+              <FlatButton
+                disableTouchRipple={true}
+                hoverColor='#FFFFFF'
+                label='Grant token'
+                href={authorizationURL(this.state.width)}
+              />
+            </CardActions>
+          </Card>
+        </PageContainer>
       </Page>
     )
   }

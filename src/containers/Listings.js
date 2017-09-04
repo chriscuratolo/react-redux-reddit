@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { loadListings, paramsToEndpoint } from '../actions'
 import Nav from '../components/Nav'
 import Page from '../components/Page'
+import PageContainer from '../components/PageContainer'
 import Timeline from '../components/Timeline'
 
 class Listings extends Component {
@@ -43,13 +44,18 @@ class Listings extends Component {
         ))
       }
     })
+
+    const header = document.querySelector('header')
+    header.addEventListener('click', () => window.scrollToTop(pageElement))
   }
   render() {
     const { pageData, isFetching } = this.props
     return (
       <Page>
         <Nav />
-        {pageData ? <Timeline isFetching={isFetching} pageData={pageData} /> : null}
+        <PageContainer>
+          {pageData ? <Timeline isFetching={isFetching} pageData={pageData} /> : null}
+        </PageContainer>
       </Page>
     )
   }
@@ -82,18 +88,18 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   // Aggregates the listings in the pageData array by page.
-  // TODO: test if perfomance is better if pageData is divided by page.
-  // TODO: figure out best way to express that next page is loading.
   const pageData = []
   let isFetching = false
   for (let page in pages) {
     if (Object.keys(listings).length > 0 && pages[page]) {
+      // Page is done loading
       if (!pages[page].isFetching) {
         const pageListings = pages[page].ids.map(id => listings[id])
         for (let listing in pageListings) {
           pageData.push(pageListings[listing])
         }
       } else {
+        // Page is loading
         isFetching = true
       }
     }
