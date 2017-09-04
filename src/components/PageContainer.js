@@ -2,9 +2,8 @@ import React from 'react'
 
 const styles = {
   pageContainer: {
-    margin: '0 auto',
+    margin: '53px auto 16px',
     maxWidth: '590px',
-    padding: '53px 14px 15px',
   },
 }
 

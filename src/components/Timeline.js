@@ -49,8 +49,8 @@ const styles = {
   },
   timeline: {
     display: 'inline-block',
-    margin: '8px auto',
-    maxWidth: '588px',
+    margin: 'auto',
+    maxWidth: '590px',
     textAlign: 'left',
     width: '100%',
   },
