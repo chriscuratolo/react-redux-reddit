@@ -45,9 +45,6 @@ class Listings extends Component {
         ))
       }
     })
-
-    const nav = document.querySelector('.nav')
-    nav.addEventListener('click', () => window.scrollToTop(document.body))
   }
   render() {
     const { pageData, isFetching } = this.props

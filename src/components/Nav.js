@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { CardText } from 'material-ui/Card'
 import Paper from 'material-ui/Paper'
 
 const styles = {
@@ -12,8 +11,9 @@ const styles = {
     zIndex: '500',
   },
   navInner: {
-    margin: '0 auto',
+    margin: '5px auto',
     maxWidth: '590px',
+    textAlign: 'center'
   },
   title: {
     fontSize: '24px',
@@ -25,7 +25,7 @@ const styles = {
 const Nav = props =>
   <Paper className='nav' style={styles.nav}>
     <div style={styles.navInner}>
-      <CardText style={styles.title}>reddit</CardText>
+        <img alt='logo' height='36px' src='assets/logo.png' />
     </div>
   </Paper>
 
