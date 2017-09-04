@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { loadListings, paramsToEndpoint } from '../actions'
 import Nav from '../components/Nav'
 import Page from '../components/Page'
-import PageContainer from '../components/PageContainer'
 import Timeline from '../components/Timeline'
 
 class Listings extends Component {
@@ -50,9 +49,7 @@ class Listings extends Component {
     return (
       <Page>
         <Nav />
-        <PageContainer>
-          {pageData ? <Timeline isFetching={isFetching} pageData={pageData} /> : null}
-        </PageContainer>
+        {pageData ? <Timeline isFetching={isFetching} pageData={pageData} /> : null}
       </Page>
     )
   }

@@ -7,11 +7,16 @@ const styles = {
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch',
   },
+  pageContainer: {
+    margin: '53px auto 8px auto',
+  }
 }
 
 const Page = props =>
   <div className='page' style={styles.page}>
-    {props.children}
+    <div style={styles.pageContainer}>
+      {props.children}
+    </div>
   </div>
 
 export default Page

@@ -7,7 +7,7 @@ import Card, { CardActions, CardMedia, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { initializeToken } from '../actions'
-import PageContainer from '../components/PageContainer'
+import Page from '../components/Page'
 
 const authorizationURL = width =>
   `https://www.reddit.com/api/v1/authorize`
@@ -86,31 +86,29 @@ class Authorize extends Component {
   }
   render() {
     return (
-      <div>
+      <Page>
         <AppBar
           title='reddit'
           showMenuIconButton={false}
           style={styles.appBar}
         />
-        <PageContainer>
-            <Card style={styles.card}>
-              <CardMedia>
-                <img src='assets/snoo-narwhal.gif' alt='snoo-narwhal' />
-              </CardMedia>
-              <CardText>
-                <h1>Authorization</h1>
-                <p style={styles.text}>
-                  In order to make requests to reddit's API via OAuth, you must grant the reddit client an <a href='https://github.com/reddit/reddit/wiki/OAuth2#authorization'>authorization token</a>.
-                </p>
-              </CardText>
-              <CardActions style={styles.cardActions}>
-                <a href={authorizationURL(this.state.width)}>
-                  <RaisedButton label='Authorize' primary={true} />
-                </a>
-              </CardActions>
-            </Card>
-        </PageContainer>
-      </div>
+        <Card style={styles.card}>
+          <CardMedia>
+            <img src='assets/snoo-narwhal.gif' alt='snoo-narwhal' />
+          </CardMedia>
+          <CardText>
+            <h1>Authorization</h1>
+            <p style={styles.text}>
+              In order to make requests to reddit's API via OAuth, you must grant the reddit client an <a href='https://github.com/reddit/reddit/wiki/OAuth2#authorization'>authorization token</a>.
+            </p>
+          </CardText>
+          <CardActions style={styles.cardActions}>
+            <a href={authorizationURL(this.state.width)}>
+              <RaisedButton label='Authorize' primary={true} />
+            </a>
+          </CardActions>
+        </Card>
+      </Page>
     )
   }
 }
