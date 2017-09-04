@@ -7,7 +7,9 @@ import Nav from '../components/Nav'
 import Page from '../components/Page'
 import PageContainer from '../components/PageContainer'
 import Timeline from '../components/Timeline'
+import './Listings.css'
 
+// TODO: this component needs to change maxWidth depending on window size
 class Listings extends Component {
   componentWillMount() {
     // Combines subreddit & sorting (params) w/ count & after (location.query)
@@ -17,8 +19,7 @@ class Listings extends Component {
     ))
   }
   componentDidMount() {
-    const pageContainer = document.querySelector('.page-container')
-    pageContainer.addEventListener('scroll', () => {
+    document.addEventListener('scroll', event => {
       /*
        * offsetHeight => height of the window
        *  scrollHeight => height of content
@@ -29,7 +30,7 @@ class Listings extends Component {
        *  then load another page.
        */
 
-      const { offsetHeight, scrollHeight, scrollTop } = pageContainer
+      const { offsetHeight, scrollHeight, scrollTop } = event.srcElement.body
       const withinPageLengthFromBottom = scrollTop + offsetHeight >= scrollHeight - offsetHeight
       const heightOfContentLargerThanView = scrollHeight > offsetHeight
 
@@ -46,7 +47,7 @@ class Listings extends Component {
     })
 
     const nav = document.querySelector('.nav')
-    nav.addEventListener('click', () => window.scrollToTop(pageContainer))
+    nav.addEventListener('click', () => window.scrollToTop(document.body))
   }
   render() {
     const { pageData, isFetching } = this.props

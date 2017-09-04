@@ -6,20 +6,19 @@ import Paper from 'material-ui/Paper'
 const styles = {
   nav: {
     height: '46px',
-    position: 'absolute',
+    position: 'fixed',
     top: '0',
     width: '100%',
-    zIndex: '1',
+    zIndex: '500',
   },
   navInner: {
-    margin: 'auto',
+    margin: '0 auto',
     maxWidth: '590px',
   },
   title: {
     fontSize: '24px',
-    margin: '8px 16px',
+    margin: '13px 16px',
     padding: '0px',
-    verticalAlign: 'baseline',
   },
 }
 

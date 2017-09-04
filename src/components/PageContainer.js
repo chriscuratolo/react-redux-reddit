@@ -2,16 +2,9 @@ import React from 'react'
 
 const styles = {
   pageContainer: {
-    bottom: '0',
-    margin: 'auto',
-    overflowX: 'hidden',
-    overflowY: 'scroll',
-    position: 'absolute',
-    textAlign: 'center',
-    top: '46px',
-    WebkitOverflowScrolling: 'touch',
-    width: '100%',
-    zIndex: '0',
+    margin: '0 auto',
+    maxWidth: '590px',
+    padding: '53px 14px 15px',
   },
 }
 
