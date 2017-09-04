@@ -5,12 +5,6 @@ const styles = {
     height: '100%',
     width: '100%',
     overflow: 'hidden',
-    /*
-    height: '100vh',
-    overflowX: 'hidden',
-    overflowY: 'scroll',
-    WebkitOverflowScrolling: 'touch',
-    */
   },
 }
 

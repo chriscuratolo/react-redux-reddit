@@ -54,7 +54,7 @@ class Listings extends Component {
       <Page>
         <Nav />
         <PageContainer>
-          {pageData ? <Timeline isFetching={isFetching} pageData={pageData} /> : null}
+          <Timeline isFetching={isFetching} pageData={pageData} />
         </PageContainer>
       </Page>
     )
@@ -88,16 +88,15 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   // Aggregates the listings in the pageData array by page.
-  const pageData = []
+  let pageData = null  // Initially falsy
   let isFetching = false
   for (let page in pages) {
     if (Object.keys(listings).length > 0 && pages[page]) {
       // Page is done loading
       if (!pages[page].isFetching) {
         const pageListings = pages[page].ids.map(id => listings[id])
-        for (let listing in pageListings) {
-          pageData.push(pageListings[listing])
-        }
+        if (!pageData) { pageData = [] }
+        for (let listing in pageListings) { pageData.push(pageListings[listing]) }
       } else {
         // Page is loading
         isFetching = true

@@ -48,8 +48,11 @@ const styles = {
     fontSize: '12pt'
   },
   timeline: {
+    display: 'inline-block',
     margin: '8px auto',
     maxWidth: '588px',
+    textAlign: 'left',
+    width: '100%',
   },
   voteButton: {
     color: lightGrey,
@@ -80,7 +83,7 @@ const subtitle = (subreddit, timeAgo) => `${subreddit} • ${timeAgo}`
 
 const Timeline = props =>
   <div style={styles.timeline}>
-    {props.pageData.map((listing, index) =>
+    {props.pageData ? props.pageData.map((listing, index) =>
       <Card key={index} style={styles.card}>
         <CardHeader
           style={styles.cardHeader}
@@ -134,7 +137,7 @@ const Timeline = props =>
         </CardActions>
         <Divider />
       </Card>
-    )}
+    ) : <Card>{loading}</Card>}
     {props.isFetching ? <Card>{loading}</Card> : null}
   </div>
 
