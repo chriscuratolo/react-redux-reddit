@@ -21,13 +21,13 @@ class Listings extends Component {
   componentDidMount() {
     document.addEventListener('scroll', event => {
       /*
-       * offsetHeight => height of the window
-       *  scrollHeight => height of content
-       *  scrollTop    => top of window
-       *
        *  If bottom of view is within a page-length away from bottom
        *  and height of content is larger than the height of the view,
        *  then load another page.
+       *
+       *  offsetHeight => height of the window
+       *  scrollHeight => height of content
+       *  scrollTop    => top of window
        */
 
       const { offsetHeight, scrollHeight, scrollTop } = event.srcElement.body
@@ -47,12 +47,14 @@ class Listings extends Component {
     })
   }
   render() {
-    const { pageData, isFetching } = this.props
     return (
       <Page>
         <Nav />
         <PageContainer>
-          <Timeline isFetching={isFetching} pageData={pageData} />
+          <Timeline
+            isFetching={this.props.isFetching}
+            pageData={this.props.pageData}
+          />
         </PageContainer>
       </Page>
     )
@@ -105,7 +107,6 @@ const mapStateToProps = (state, ownProps) => {
   return { pages, pageData, isFetching }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ loadListings }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ loadListings }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Listings)
