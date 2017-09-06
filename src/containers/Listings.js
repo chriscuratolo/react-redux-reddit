@@ -24,6 +24,9 @@ const styles = {
   column: {
     boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px',
   },
+  tab: {
+    fontSize: '12px',
+  },
   tabItemContainer: {
     borderRadius: '0',
     boxShadow: '0',
@@ -77,7 +80,6 @@ class Listings extends Component {
   componentWillReceiveProps(nextProps) {
     const { sorting } = this.props.params
     if (sorting !== nextProps.params.sorting) {
-      console.log('sorting changed to ', nextProps.params.sorting, '!')
       this.setState({ selectedTab: nextProps.params.sorting })
       this.props.loadListings(Object.assign({},
         nextProps.params,
@@ -112,28 +114,28 @@ class Listings extends Component {
               tabItemContainerStyle={styles.tabItemContainer}
               value={this.state.selectedTab}
             >
-              <Tab label='hot' value='hot'>
+              <Tab label='hot' style={styles.tab} value='hot'>
                 {!sorting || sorting === 'hot' ?
                   <Timeline
                     isFetching={this.props.isFetching}
                     pageData={this.props.pageData}
                   /> : null}
               </Tab>
-              <Tab label='new' value='new'>
+              <Tab label='new' style={styles.tab} value='new'>
                 {sorting === 'new' ?
                   <Timeline
                     isFetching={this.props.isFetching}
                     pageData={this.props.pageData}
                   /> : null}
               </Tab>
-              <Tab label='controversial' value='controversial'>
+              <Tab label='controversial' style={styles.tab} value='controversial'>
                 {sorting === 'controversial' ?
                   <Timeline
                     isFetching={this.props.isFetching}
                     pageData={this.props.pageData}
                   /> : null}
               </Tab>
-              <Tab label='top' value='top'>
+              <Tab label='top' style={styles.tab} value='top'>
                 {sorting === 'top' ?
                   <Timeline
                     isFetching={this.props.isFetching}
