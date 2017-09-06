@@ -24,7 +24,7 @@ const Nav = props =>
   <Paper className='nav' style={styles.nav}>
     <div style={styles.navContainer}>
       <div style={styles.navInner}>
-        <img alt='logo' height='40px' src='assets/logo.png' />
+        <img alt='logo' height='40px' src='assets/logo.svg' />
       </div>
     </div>
   </Paper>
