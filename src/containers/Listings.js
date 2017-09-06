@@ -2,12 +2,33 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import Card, { CardTitle } from 'material-ui/Card'
+import Divider from 'material-ui/Divider'
+import { Tabs, Tab } from 'material-ui/Tabs'
+
 import { loadListings, paramsToEndpoint } from '../actions'
 import Nav from '../components/Nav'
 import Page from '../components/Page'
 import PageContainer from '../components/PageContainer'
 import Timeline from '../components/Timeline'
 import './Listings.css'
+
+const styles = {
+  card: {
+    borderRadius: '0',
+    boxShadow: '0',
+  },
+  cardTitle: {
+    textAlign: 'center'
+  },
+  column: {
+    boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px',
+  },
+  tabItemContainer: {
+    borderRadius: '0',
+    boxShadow: '0',
+  },
+}
 
 // TODO: this component needs to change maxWidth depending on window size
 class Listings extends Component {
@@ -17,6 +38,13 @@ class Listings extends Component {
       this.props.params,
       this.props.location.query
     ))
+
+    // Sets sorting tab based on params
+    if (this.props.params.sorting) {
+      this.setState({ selectedTab: this.props.params.sorting })
+    } else {
+      this.setState({ selectedTab: 'hot' })
+    }
   }
   componentDidMount() {
     document.addEventListener('scroll', event => {
@@ -46,15 +74,74 @@ class Listings extends Component {
       }
     })
   }
+  componentWillReceiveProps(nextProps) {
+    const { sorting } = this.props.params
+    if (sorting !== nextProps.params.sorting) {
+      console.log('sorting changed to ', nextProps.params.sorting, '!')
+      this.setState({ selectedTab: nextProps.params.sorting })
+      this.props.loadListings(Object.assign({},
+        nextProps.params,
+        nextProps.location.query
+      ))
+    }
+  }
+  state = {
+    selectedTab: null,
+  }
+  handleTabChange = sorting => {
+    const newParams = Object.assign({}, this.props.params, { sorting })
+    const endpoint = paramsToEndpoint(newParams)
+    this.props.router.push(endpoint)
+  }
   render() {
+    const { subreddit, sorting } = this.props.params
     return (
       <Page>
         <Nav />
         <PageContainer>
-          <Timeline
-            isFetching={this.props.isFetching}
-            pageData={this.props.pageData}
-          />
+          <div style={styles.column}>
+            <Card style={styles.card}>
+              <CardTitle
+                title={subreddit ? `r/${subreddit}` : 'Home'}
+                style={styles.cardTitle}
+              />
+              <Divider />
+            </Card>
+            <Tabs
+              onChange={this.handleTabChange}
+              tabItemContainerStyle={styles.tabItemContainer}
+              value={this.state.selectedTab}
+            >
+              <Tab label='hot' value='hot'>
+                {!sorting || sorting === 'hot' ?
+                  <Timeline
+                    isFetching={this.props.isFetching}
+                    pageData={this.props.pageData}
+                  /> : null}
+              </Tab>
+              <Tab label='new' value='new'>
+                {sorting === 'new' ?
+                  <Timeline
+                    isFetching={this.props.isFetching}
+                    pageData={this.props.pageData}
+                  /> : null}
+              </Tab>
+              <Tab label='controversial' value='controversial'>
+                {sorting === 'controversial' ?
+                  <Timeline
+                    isFetching={this.props.isFetching}
+                    pageData={this.props.pageData}
+                  /> : null}
+              </Tab>
+              <Tab label='top' value='top'>
+                {sorting === 'top' ?
+                  <Timeline
+                    isFetching={this.props.isFetching}
+                    pageData={this.props.pageData}
+                  /> : null}
+              </Tab>
+            </Tabs>
+          </div>
         </PageContainer>
       </Page>
     )
@@ -89,7 +176,7 @@ const mapStateToProps = (state, ownProps) => {
 
   // Aggregates the listings in the pageData array by page.
   let pageData = null  // Initially falsy
-  let isFetching = false
+  let isFetching = true
   for (let page in pages) {
     if (Object.keys(listings).length > 0 && pages[page]) {
       // Page is done loading

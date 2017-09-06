@@ -6,8 +6,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import Divider from 'material-ui/Divider'
 import FlatButton from 'material-ui/FlatButton'
 import FontIcon from 'material-ui/FontIcon'
-
-const lightGrey = 'rgba(0, 0, 0, 0.54)'
+import { grey600 } from 'material-ui/styles/colors'
 
 const styles = {
   buttonSection: {
@@ -15,6 +14,7 @@ const styles = {
   },
   card: {
     borderRadius: '0',
+    boxShadow: '0',
   },
   cardActions: {
     padding: '2px 8px',
@@ -29,7 +29,7 @@ const styles = {
     padding: '0px',
   },
   cardText: {
-    fontSize: '14px',
+    fontSize: '16px',
     lineHeight: '150%',
     padding: '2px 16px 0px',
   },
@@ -38,7 +38,7 @@ const styles = {
     textAlign: 'center',
   },
   commentsButton: {
-    color: lightGrey,
+    color: grey600,
   },
   commentsButtonLabel: {
     fontSize: '12px',
@@ -55,7 +55,7 @@ const styles = {
     width: '100%',
   },
   voteButton: {
-    color: lightGrey,
+    color: grey600,
     minWidth: '30px',
   },
   voteButtonIcon: {
@@ -76,15 +76,16 @@ const numberShortener = value => {
 
 const loading =
   <div style={styles.circularProgress}>
-    <CircularProgress color={lightGrey} size={30} />
+    <CircularProgress color='#FF4500' size={30} />
   </div>
 
-const subtitle = (subreddit, timeAgo) => `${subreddit} • ${timeAgo}`
+  const subtitle = (subreddit, timeAgo) => `${subreddit} • ${timeAgo}`
 
 const Timeline = props =>
   <div style={styles.timeline}>
     {props.pageData ? props.pageData.map((listing, index) =>
       <Card key={index} style={styles.card}>
+        <Divider />
         <CardHeader
           style={styles.cardHeader}
           subtitle={subtitle(
@@ -135,10 +136,13 @@ const Timeline = props =>
             />
           </div>
         </CardActions>
-        <Divider />
       </Card>
-    ) : <Card>{loading}</Card>}
-    {props.isFetching ? <Card>{loading}</Card> : null}
+    ) : null}
+    {props.isFetching ?
+        <Card style={styles.card}>
+          <Divider />
+          {loading}
+        </Card> : null}
   </div>
 
 export default Timeline

@@ -10,22 +10,22 @@ const styles = {
     width: '100%',
     zIndex: '500',
   },
-  navInner: {
+  navContainer: {
     margin: '3px auto',
     maxWidth: '590px',
-    textAlign: 'center'
   },
-  title: {
-    fontSize: '24px',
-    margin: '13px 16px',
-    padding: '0px',
+  navInner: {
+    paddingLeft: '16px',
+    paddingRight: '16px',
   },
 }
 
 const Nav = props =>
   <Paper className='nav' style={styles.nav}>
-    <div style={styles.navInner}>
+    <div style={styles.navContainer}>
+      <div style={styles.navInner}>
         <img alt='logo' height='40px' src='assets/logo.png' />
+      </div>
     </div>
   </Paper>
 
