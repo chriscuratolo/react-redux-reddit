@@ -2,6 +2,8 @@ import React from 'react'
 
 import Paper from 'material-ui/Paper'
 
+import logo from './logo.svg'
+
 const styles = {
   nav: {
     height: '46px',
@@ -24,7 +26,7 @@ const Nav = props =>
   <Paper className='nav' style={styles.nav}>
     <div style={styles.navContainer}>
       <div style={styles.navInner}>
-        <img alt='logo' height='30px' src='assets/logo.svg' />
+        <img alt='logo' height='30px' src={logo} />
       </div>
     </div>
   </Paper>
