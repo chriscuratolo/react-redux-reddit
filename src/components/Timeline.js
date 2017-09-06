@@ -79,7 +79,7 @@ const loading =
     <CircularProgress color='#FF4500' size={30} />
   </div>
 
-  const subtitle = (subreddit, timeAgo) => `${subreddit} • ${timeAgo}`
+const subtitle = (subreddit, timeAgo) => `${subreddit} • ${timeAgo}`
 
 const Timeline = props =>
   <div style={styles.timeline}>
