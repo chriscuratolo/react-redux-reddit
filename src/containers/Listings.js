@@ -177,14 +177,13 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   // Aggregates the listings in the pageData array by page.
-  let pageData = null  // Initially falsy
-  let isFetching = true
+  let pageData = []
+  let isFetching = false
   for (let page in pages) {
     if (Object.keys(listings).length > 0 && pages[page]) {
       // Page is done loading
       if (!pages[page].isFetching) {
         const pageListings = pages[page].ids.map(id => listings[id])
-        if (!pageData) { pageData = [] }
         for (let listing in pageListings) { pageData.push(pageListings[listing]) }
       } else {
         // Page is loading

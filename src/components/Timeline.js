@@ -75,15 +75,18 @@ const numberShortener = value => {
 }
 
 const loading =
-  <div style={styles.circularProgress}>
-    <CircularProgress color='#FF4500' size={30} />
-  </div>
+  <Card style={styles.card}>
+    <Divider />
+    <div style={styles.circularProgress}>
+      <CircularProgress color='#FF4500' size={30} />
+    </div>
+  </Card>
 
 const subtitle = (subreddit, timeAgo) => `${subreddit} • ${timeAgo}`
 
 const Timeline = props =>
   <div style={styles.timeline}>
-    {props.pageData ? props.pageData.map((listing, index) =>
+    {props.pageData.length > 0 ? props.pageData.map((listing, index) =>
       <Card key={index} style={styles.card}>
         <Divider />
         <CardHeader
@@ -138,11 +141,7 @@ const Timeline = props =>
         </CardActions>
       </Card>
     ) : null}
-    {props.isFetching ?
-        <Card style={styles.card}>
-          <Divider />
-          {loading}
-        </Card> : null}
+    {props.isFetching || props.pageData.length === 0 ? loading : null}
   </div>
 
 export default Timeline
