@@ -19,7 +19,7 @@ const Feed = props =>
       props.pageData.map((listing, index) =>
         <FeedItem data={listing.data} key={index} />)
       : null}
-    {props.isFetching || props.pageData.length === 0 ? <Loading /> : null}
+    <Loading />
   </div>
 
 export default Feed
