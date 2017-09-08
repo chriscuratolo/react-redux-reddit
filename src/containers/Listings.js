@@ -10,7 +10,7 @@ import { loadListings, paramsToEndpoint } from '../actions'
 import Nav from '../components/Nav'
 import Page from '../components/Page'
 import PageContainer from '../components/PageContainer'
-import Timeline from '../components/Timeline'
+import Feed from '../components/Feed'
 import './Listings.css'
 
 const styles = {
@@ -116,28 +116,28 @@ class Listings extends Component {
             >
               <Tab label='hot' style={styles.tab} value='hot'>
                 {!sorting || sorting === 'hot' ?
-                  <Timeline
+                  <Feed
                     isFetching={this.props.isFetching}
                     pageData={this.props.pageData}
                   /> : null}
               </Tab>
               <Tab label='new' style={styles.tab} value='new'>
                 {sorting === 'new' ?
-                  <Timeline
+                  <Feed
                     isFetching={this.props.isFetching}
                     pageData={this.props.pageData}
                   /> : null}
               </Tab>
               <Tab label='controversial' style={styles.tab} value='controversial'>
                 {sorting === 'controversial' ?
-                  <Timeline
+                  <Feed
                     isFetching={this.props.isFetching}
                     pageData={this.props.pageData}
                   /> : null}
               </Tab>
               <Tab label='top' style={styles.tab} value='top'>
                 {sorting === 'top' ?
-                  <Timeline
+                  <Feed
                     isFetching={this.props.isFetching}
                     pageData={this.props.pageData}
                   /> : null}
